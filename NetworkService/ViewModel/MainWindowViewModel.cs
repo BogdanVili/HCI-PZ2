@@ -16,6 +16,7 @@ namespace NetworkService.ViewModel
             //createListener(); //Povezivanje sa serverskom aplikacijom
             CurrentViewModel = networkEntitiesViewModel;
             NavCommand = new MyICommand<string>(OnNav);
+            HomeCommand = new MyICommand(OnHome);
         }
 
         #region connection
@@ -72,6 +73,7 @@ namespace NetworkService.ViewModel
         }
         #endregion
 
+        #region nav
         public MyICommand<string> NavCommand { get; private set; }
         private MeasurementGraphViewModel measurementGraphViewModel = new MeasurementGraphViewModel();
         private NetworkDisplayViewModel networkDisplayViewModel = new NetworkDisplayViewModel();
@@ -101,6 +103,14 @@ namespace NetworkService.ViewModel
                     CurrentViewModel = measurementGraphViewModel;
                     break;
             }
+        }
+        #endregion
+
+        public MyICommand HomeCommand { get; set; }
+
+        private void OnHome()
+        {
+            CurrentViewModel = networkEntitiesViewModel;
         }
     }
 }

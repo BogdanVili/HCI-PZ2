@@ -23,24 +23,45 @@
 		</DataTemplate>
 	</Window.Resources>
 	<Grid>
+		<Grid.Resources>
+			<ImageBrush x:Key="HomeImageBrush" ImageSource="Images/home.png" Stretch="Uniform"/>
+			<ImageBrush x:Key="UndoImageBrush" ImageSource="Images/undo.png" Stretch="Uniform"/>
+		</Grid.Resources>
+
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition/>
+			<ColumnDefinition/>
+		</Grid.ColumnDefinitions>
+
 		<Grid.RowDefinitions>
-			<RowDefinition Height="Auto" />
-			<RowDefinition Height="Auto"/>
-			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="1*" />
+			<RowDefinition Height="7*"/>
+			<RowDefinition Height="1*" />
 		</Grid.RowDefinitions>
 
-		<DockPanel Grid.Row="0" Margin="5" HorizontalAlignment="Center">
-			<Menu DockPanel.Dock="Top">
+		<DockPanel Grid.Row="0" Grid.ColumnSpan="2" HorizontalAlignment="Center">
+			<Menu Width="640">
 				<MenuItem Header="Network Entities" Command="{Binding NavCommand}"
-                          CommandParameter="network entities" FontSize="20" BorderBrush="Black"/>
+                          CommandParameter="network entities" FontSize="20" BorderBrush="Black" Height="103" Width="210"/>
 				<MenuItem Header="Network Display" Command="{Binding NavCommand}"
-                          CommandParameter="network display" FontSize="20" BorderBrush="Black"/>
+                          CommandParameter="network display" FontSize="20" BorderBrush="Black" Height="103" Width="211"/>
 				<MenuItem Header="Measurement Graph" Command="{Binding NavCommand}"
-                          CommandParameter="measurement graph" FontSize="20" BorderBrush="Black"/>
+                          CommandParameter="measurement graph" FontSize="20" BorderBrush="Black" Height="103" Width="210" />
 			</Menu>
 		</DockPanel>
-		<Grid Grid.Row="1">
+
+		<Grid Grid.Row="1" Grid.ColumnSpan="2">
 			<ContentControl Content="{Binding CurrentViewModel}"/>
 		</Grid>
+
+
+
+		<Grid Grid.Row="2" Grid.Column="0">
+			<Button Command="{Binding HomeCommand}" Background="{StaticResource HomeImageBrush}"></Button>
+		</Grid>
+		<Grid Grid.Row="2" Grid.Column="1">
+			<Button Command="{Binding UndoCommand}" Background="{StaticResource UndoImageBrush}"></Button>
+		</Grid>
+
 	</Grid>
 </Window>

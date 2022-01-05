@@ -9,7 +9,35 @@
 			 xmlns:vml="clr-namespace:NetworkService.VML"
              vml:ViewModelLocator.AutoHookedUpViewModel="True">
     <Grid>
-		<Label Content="Entity" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+		</Grid.RowDefinitions>
+		<Label Grid.Row="0" Content="Network Entities" HorizontalAlignment="Center" VerticalAlignment="Top"></Label>
+		<StackPanel Orientation="Vertical" Grid.Row="1">
+			<StackPanel Orientation="Vertical">
+				<ListView x:Name="DERsList" ItemsSource="{Binding DERs}"
+                          ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                          ScrollViewer.VerticalScrollBarVisibility="Auto"/>
+			</StackPanel>
+		</StackPanel>
+		<StackPanel Orientation="Vertical" Grid.Row="2">
+			<TextBlock Text="ID"/>
+			 
+			<TextBlock Text="Name"/>
 
+			<ComboBox ItemsSource="{Binding TypeOfDERs}" SelectedItem="{Binding CurrentDER.TypeOfDER}">
+				<ComboBox.ItemTemplate>
+					<ItemContainerTemplate>
+						<StackPanel Orientation="Horizontal">
+							<Image Source="{Binding ImageSource}" Width="50" Height="50"></Image>
+							<TextBlock><Run Text="{Binding Name}"/></TextBlock>
+						</StackPanel>
+					</ItemContainerTemplate>
+				</ComboBox.ItemTemplate>
+			</ComboBox>
+			<Button Command="{Binding AddDER}">ADD</Button>
+		</StackPanel>
 	</Grid>
 </UserControl>

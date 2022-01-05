@@ -39,17 +39,17 @@ namespace NetworkService.Model
         }
         
 
-        private TypeOfEnergyResource type;
+        private TypeOfEnergyResource typeOfDER;
 
-        public TypeOfEnergyResource Type
+        public TypeOfEnergyResource TypeOfDER
         {
-            get { return type; }
+            get { return typeOfDER; }
             set 
             { 
-                if(type != value)
-                { 
-                    type = value;
-                    OnPropertyChanged("Type");
+                if(typeOfDER != value)
+                {
+                    typeOfDER = value;
+                    OnPropertyChanged("TypeOfDER");
                 }
             }
         }
@@ -70,6 +70,18 @@ namespace NetworkService.Model
             }
         }
 
+        public DistributedEnergyResource()
+        {
+            typeOfDER = new TypeOfEnergyResource();
+        }
+
+        public DistributedEnergyResource(int id, string name, TypeOfEnergyResource typeOfDER)
+        {
+            this.id = id;
+            this.name = name;
+            this.typeOfDER = typeOfDER;
+        }
+
         protected override void ValidateSelf()
         {
             if (string.IsNullOrWhiteSpace(id.ToString()))
@@ -82,9 +94,9 @@ namespace NetworkService.Model
                 ValidationErrors["Name"] = "Name is required.";
             }
 
-            if (string.IsNullOrWhiteSpace(type.Name))
+            if (string.IsNullOrWhiteSpace(typeOfDER.Name))
             {
-                ValidationErrors["Type"] = "Type is required.";
+                ValidationErrors["TypeOfDER"] = "Type is required.";
             }
         }
     }

@@ -23,5 +23,16 @@ namespace NetworkService.Model
             get { return imageSource; }
             set { imageSource = value; }
         }
+
+        public TypeOfEnergyResource()
+        {
+
+        }
+
+        public TypeOfEnergyResource(string name, string imageSource)
+        {
+            this.name = name;
+            this.imageSource = imageSource;
+        }
     }
 }
