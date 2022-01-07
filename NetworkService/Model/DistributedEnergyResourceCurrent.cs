@@ -72,7 +72,7 @@ namespace NetworkService.Model
                 ValidationErrors["Id"] = "Id is required.";
             }
 
-            if (DistributedEnergyResources.DERs.FirstOrDefault(d => d.Id == Int32.Parse(Id)) != null)
+            if (StaticData.DERs.FirstOrDefault(d => d.Id == Int32.Parse(Id)) != null)
             {
                 ValidationErrors["Id"] = "Id already exists.";
             }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NetworkService.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,7 +8,7 @@ using System.Windows.Input;
 
 namespace NetworkService
 {
-    public class MyICommand : ICommand
+    public class MyICommand : ICommand, ICommandUndo
     {
         Action _TargetExecuteMethod;
         Func<bool> _TargetCanExecuteMethod;
@@ -51,13 +52,30 @@ namespace NetworkService
             if (_TargetExecuteMethod != null)
             {
                 _TargetExecuteMethod();
+                if (_TargetUnExecuteMethod != null)
+                {
+                    StaticData.myICommands.Push(this);
+                }
             }
         }
 
+        Action _TargetUnExecuteMethod;
+        public MyICommand(Action executeMethod, Action unExecuteMethod)
+        {
+            _TargetExecuteMethod = executeMethod;
+            _TargetUnExecuteMethod = unExecuteMethod;
+        }
 
+        public void UnExecute()
+        {
+            if (_TargetUnExecuteMethod != null)
+            {
+                _TargetUnExecuteMethod();
+            }
+        }
     }
 
-    public class MyICommand<T> : ICommand
+    public class MyICommand<T> : ICommand, ICommandUndo
     {
 
         Action<T> _TargetExecuteMethod;
@@ -105,6 +123,25 @@ namespace NetworkService
             if (_TargetExecuteMethod != null)
             {
                 _TargetExecuteMethod((T)parameter);
+                if (_TargetUnExecuteMethod != null)
+                {
+                    StaticData.myICommands.Push(this);
+                }
+            }
+        }
+
+        Action _TargetUnExecuteMethod;
+        public MyICommand(Action<T> executeMethod, Action unExecuteMethod)
+        {
+            _TargetExecuteMethod = executeMethod;
+            _TargetUnExecuteMethod = unExecuteMethod;
+        }
+
+        public void UnExecute()
+        {
+            if (_TargetUnExecuteMethod != null)
+            {
+                _TargetUnExecuteMethod();
             }
         }
 

@@ -7,6 +7,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace NetworkService.ViewModel
 {
@@ -16,9 +17,11 @@ namespace NetworkService.ViewModel
         {
             //createListener(); //Povezivanje sa serverskom aplikacijom
             CurrentViewModel = networkEntitiesViewModel;
-            NavCommand = new MyICommand<string>(OnNav);
+            UndoDestinations.Add("network entities");
+            NavCommand = new MyICommand<string>(OnNav, OnUndoNav);
             HomeCommand = new MyICommand(OnHome);
             ClosingMainWindow = new MyICommand(OnClosingMainWindow);
+            UndoCommand = new MyICommand(OnUndo);
         }
 
         #region connection
@@ -91,8 +94,11 @@ namespace NetworkService.ViewModel
             }
         }
 
+        private List<string> UndoDestinations = new List<string>();
+
         private void OnNav(string destination)
         {
+            UndoDestinations.Add(destination);
             switch (destination)
             {
                 case "network entities":
@@ -104,6 +110,27 @@ namespace NetworkService.ViewModel
                 case "measurement graph":
                     CurrentViewModel = measurementGraphViewModel;
                     break;
+            }
+        }
+
+        private void OnUndoNav()
+        {
+            if(UndoDestinations.Count > 1)
+            {
+                string destination = UndoDestinations.ElementAt(UndoDestinations.Count - 2);
+                switch (destination)
+                {
+                    case "network entities":
+                        CurrentViewModel = networkEntitiesViewModel;
+                        break;
+                    case "network display":
+                        CurrentViewModel = networkDisplayViewModel;
+                        break;
+                    case "measurement graph":
+                        CurrentViewModel = measurementGraphViewModel;
+                        break;
+                }
+                UndoDestinations.RemoveAt(UndoDestinations.Count - 1);
             }
         }
         #endregion
@@ -119,7 +146,17 @@ namespace NetworkService.ViewModel
 
         public void OnClosingMainWindow()
         {
-            DistributedEnergyResources.DataIO.SaveData("ders.xml", DistributedEnergyResources.DERs);
+            StaticData.DataIO.SaveData("ders.xml", StaticData.DERs);
+        }
+
+        public MyICommand UndoCommand { get; set; }
+        public void OnUndo()
+        {
+            if (StaticData.myICommands.Count > 0)
+            {
+                ICommandUndo command = StaticData.myICommands.Pop();
+                command.UnExecute();
+            }
         }
     }
 }

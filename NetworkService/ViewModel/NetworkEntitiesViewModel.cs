@@ -10,7 +10,7 @@ namespace NetworkService.ViewModel
 {
     public class NetworkEntitiesViewModel : BindableBase
     {
-        ObservableCollection<DistributedEnergyResource> DERs = DistributedEnergyResources.DERs;
+        ObservableCollection<DistributedEnergyResource> DERs = StaticData.DERs;
 
         public MyICommand AddDER { get; set; }
         public MyICommand DeleteDER { get; set; }
@@ -42,63 +42,57 @@ namespace NetworkService.ViewModel
 
         public ObservableCollection<TypeOfEnergyResource> TypeOfDERs { get; set; }
 
-        private string currentDERid;
-
-        public string CurrentDERid
-        {
-            get { return currentDERid;  }
-            set
-            {
-                currentDERid = value;
-                OnPropertyChanged("CurrentDERid");
-            }
-        }
-
-        private string validationErrorId;
-
-        public string ValidationErrorId
-        {
-            get { return validationErrorId; }
-            set
-            {
-                validationErrorId = value;
-                OnPropertyChanged("ValidationErrorId");
-            }
-        }
-
-        private Data serializer = new Data();
-
         public NetworkEntitiesViewModel()
         {
-            AddDER = new MyICommand(OnAddDER);
+            AddDER = new MyICommand(OnAddDER, OnUndoAddDER);
 
             TypeOfDERs = new ObservableCollection<TypeOfEnergyResource>();
             TypeOfDERs.Add(new TypeOfEnergyResource("Solar Panel", "C:\\Users\\bokic\\Desktop\\HCI PZ2\\NetworkService\\NetworkService\\Images\\solarpanel.png"));
             TypeOfDERs.Add(new TypeOfEnergyResource("Wind Turbine", "C:\\Users\\bokic\\Desktop\\HCI PZ2\\NetworkService\\NetworkService\\Images\\windturbine.png"));
 
-            DeleteDER = new MyICommand(OnDeleteDER);
+            DeleteDER = new MyICommand(OnDeleteDER, OnUndoDeleteDER);
         }
 
 
         public void OnAddDER()
-        {
-            ValidationErrorId = "";
-            
+        {   
             CurrentDER.Validate();
             if (CurrentDER.IsValid)
             {
                 DERs.Add(new DistributedEnergyResource(Int32.Parse(CurrentDER.Id), CurrentDER.Name, CurrentDER.TypeOfDER));
+                addedDERs.Add(Int32.Parse(CurrentDER.Id));
             }
         }
 
+        List<int> addedDERs = new List<int>();
+
+        public void OnUndoAddDER()
+        {
+            if (addedDERs.Count > 0)
+            {
+                DistributedEnergyResource der = DERs.FirstOrDefault(d => d.Id == addedDERs.Last());
+                DERs.Remove(der);
+                addedDERs.Remove(addedDERs.Last());
+            }
+        }
+
+        List<DistributedEnergyResource> DeletedDERs = new List<DistributedEnergyResource>();
         public void OnDeleteDER()
         {
             if(SelectedDER != null)
             {
+                DeletedDERs.Add(SelectedDER);
                 DERs.Remove(SelectedDER);
             }
         }
 
-
+        public void OnUndoDeleteDER()
+        {
+            if(DeletedDERs.Count > 0)
+            {
+                DERs.Add(DeletedDERs.Last());
+                DeletedDERs.Remove(DeletedDERs.Last());
+            }
+        }
     }
 }

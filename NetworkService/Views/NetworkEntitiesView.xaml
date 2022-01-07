@@ -18,7 +18,7 @@
 		<Label Grid.Row="0" Content="Network Entities" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="22"></Label>
 		<StackPanel Orientation="Vertical" Grid.Row="1">
 			<StackPanel Orientation="Vertical">
-				<ListView x:Name="DERsList" ItemsSource="{Binding Source={x:Static data:DistributedEnergyResources.DERs}}"
+				<ListView x:Name="DERsList" ItemsSource="{Binding Source={x:Static data:StaticData.DERs}}"
                           ScrollViewer.HorizontalScrollBarVisibility="Auto"
                           ScrollViewer.VerticalScrollBarVisibility="Auto"
 						  SelectedItem="{Binding SelectedDER}">
