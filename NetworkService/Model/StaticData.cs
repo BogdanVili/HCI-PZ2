@@ -15,5 +15,7 @@ namespace NetworkService.Model
         public static ObservableCollection<DistributedEnergyResource> DERs = DataIO.LoadData("ders.xml");
 
         public static Stack<ICommandUndo> myICommands = new Stack<ICommandUndo>();
+
+        public static ObservableCollection<LoggedData> loggedDatas = DataIO.LoadLogs("Log.txt");
     }
 }

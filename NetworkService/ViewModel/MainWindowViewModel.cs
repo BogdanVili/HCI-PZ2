@@ -15,7 +15,7 @@ namespace NetworkService.ViewModel
     {
         public MainWindowViewModel()
         {
-            //createListener(); //Povezivanje sa serverskom aplikacijom
+            createListener(); //Povezivanje sa serverskom aplikacijom
             CurrentViewModel = networkEntitiesViewModel;
             UndoDestinations.Add("network entities");
             NavCommand = new MyICommand<string>(OnNav, OnUndoNav);
@@ -25,7 +25,6 @@ namespace NetworkService.ViewModel
         }
 
         #region connection
-        private int count = 15; // Inicijalna vrednost broja objekata u sistemu
                                 // ######### ZAMENITI stvarnim brojem elemenata
                                 //           zavisno od broja entiteta u listi
         private void createListener()
@@ -46,7 +45,7 @@ namespace NetworkService.ViewModel
                         byte[] bytes = new byte[1024];
                         int i = stream.Read(bytes, 0, bytes.Length);
                         //Primljena poruka je sacuvana u incomming stringu
-                        incomming = System.Text.Encoding.ASCII.GetString(bytes, 0, i);
+                        incomming = Encoding.ASCII.GetString(bytes, 0, i);
 
                         //Ukoliko je primljena poruka pitanje koliko objekata ima u sistemu -> odgovor
                         if (incomming.Equals("Need object count"))
@@ -56,7 +55,7 @@ namespace NetworkService.ViewModel
                              * duzinu liste koja sadrzi sve objekte pod monitoringom, odnosno
                              * njihov ukupan broj (NE BROJATI OD NULE, VEC POSLATI UKUPAN BROJ)
                              * */
-                            Byte[] data = System.Text.Encoding.ASCII.GetBytes(count.ToString());
+                            Byte[] data = Encoding.ASCII.GetBytes(StaticData.DERs.Count.ToString());
                             stream.Write(data, 0, data.Length);
                         }
                         else
@@ -67,7 +66,13 @@ namespace NetworkService.ViewModel
                             //################ IMPLEMENTACIJA ####################
                             // Obraditi poruku kako bi se dobile informacije o izmeni
                             // Azuriranje potrebnih stvari u aplikaciji
+                            
+                            string[] split = incomming.Split(':');
+                            int id = Int32.Parse(split[0].Split('_')[1]);
+                            double valueMeasured = Double.Parse(split[1]);
 
+                            StaticData.loggedDatas.Add(new LoggedData(id, DateTime.Now, valueMeasured));
+                            StaticData.DataIO.SaveLog("Log.txt", new LoggedData(id, DateTime.Now, valueMeasured));
                         }
                     }, null);
                 }

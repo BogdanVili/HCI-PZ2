@@ -56,17 +56,17 @@ namespace NetworkService.Model
         }
 
 
-        private double value;
+        private double valueMeasure;
 
-        public double Value
+        public double ValueMeasure
         {
-            get { return value; }
+            get { return valueMeasure; }
             set 
             { 
-                if(this.value != value)
+                if(this.valueMeasure != value)
                 {
-                    this.value = value;
-                    OnPropertyChanged("Value");
+                    this.valueMeasure = value;
+                    OnPropertyChanged("ValueMeasure");
                 }
             }
         }
