@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NetworkService.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -17,6 +18,7 @@ namespace NetworkService.ViewModel
             CurrentViewModel = networkEntitiesViewModel;
             NavCommand = new MyICommand<string>(OnNav);
             HomeCommand = new MyICommand(OnHome);
+            ClosingMainWindow = new MyICommand(OnClosingMainWindow);
         }
 
         #region connection
@@ -111,6 +113,13 @@ namespace NetworkService.ViewModel
         private void OnHome()
         {
             CurrentViewModel = networkEntitiesViewModel;
+        }
+
+        public MyICommand ClosingMainWindow { get; set; }
+
+        public void OnClosingMainWindow()
+        {
+            DistributedEnergyResources.DataIO.SaveData("ders.xml", DistributedEnergyResources.DERs);
         }
     }
 }

@@ -6,12 +6,11 @@ using System.Threading.Tasks;
 
 namespace NetworkService.Model
 {
-    [Serializable]
-    public class DistributedEnergyResource : BindableBase
+    public class DistributedEnergyResourceCurrent : ValidationBase
     {
-        private int id;
+        private string id;
 
-        public int Id
+        public string Id
         {
             get { return id; }
             set
@@ -38,16 +37,16 @@ namespace NetworkService.Model
                 }
             }
         }
-        
+
 
         private TypeOfEnergyResource typeOfDER;
 
         public TypeOfEnergyResource TypeOfDER
         {
             get { return typeOfDER; }
-            set 
-            { 
-                if(typeOfDER != value)
+            set
+            {
+                if (typeOfDER != value)
                 {
                     typeOfDER = value;
                     OnPropertyChanged("TypeOfDER");
@@ -55,34 +54,40 @@ namespace NetworkService.Model
             }
         }
 
-
-        private double value;
-
-        public double Value
-        {
-            get { return value; }
-            set 
-            { 
-                if(this.value != value)
-                {
-                    this.value = value;
-                    OnPropertyChanged("Value");
-                }
-            }
-        }
-
-        public DistributedEnergyResource()
+        public DistributedEnergyResourceCurrent()
         {
             typeOfDER = new TypeOfEnergyResource();
         }
 
-        public DistributedEnergyResource(int id, string name, TypeOfEnergyResource typeOfDER)
+        protected override void ValidateSelf()
         {
-            this.id = id;
-            this.name = name;
-            this.typeOfDER = typeOfDER;
+            int temp;
+            if (!Int32.TryParse(id, out temp))
+            {
+                ValidationErrors["Id"] = "Id must be an integer.";
+            }
+
+            if (string.IsNullOrWhiteSpace(id))
+            {
+                ValidationErrors["Id"] = "Id is required.";
+            }
+
+            if (DistributedEnergyResources.DERs.FirstOrDefault(d => d.Id == Int32.Parse(Id)) != null)
+            {
+                ValidationErrors["Id"] = "Id already exists.";
+            }
+
+                if (string.IsNullOrWhiteSpace(name))
+            {
+                ValidationErrors["Name"] = "Name is required.";
+            }
+
+            if (string.IsNullOrWhiteSpace(typeOfDER.Name))
+            {
+                ValidationErrors["TypeOfDER"] = "Type is required.";
+            }
+
+
         }
-
-
     }
 }

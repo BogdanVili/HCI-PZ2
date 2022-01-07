@@ -62,6 +62,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="BindableBase.cs" />
+    <Compile Include="Model\Data.cs" />
+    <Compile Include="Model\DistributedEnergyResourceCurrent.cs" />
+    <Compile Include="Model\DistributedEnergyResources.cs" />
     <Compile Include="Model\TypeOfEnergyResource.cs" />
     <Compile Include="Model\DistributedEnergyResource.cs" />
     <Compile Include="MyICommand.cs" />

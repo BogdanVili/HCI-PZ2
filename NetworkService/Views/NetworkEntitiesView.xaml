@@ -5,27 +5,49 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:NetworkService.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300"			 
+             d:DesignHeight="600" d:DesignWidth="640"			 
 			 xmlns:vml="clr-namespace:NetworkService.VML"
-             vml:ViewModelLocator.AutoHookedUpViewModel="True">
-    <Grid>
+             vml:ViewModelLocator.AutoHookedUpViewModel="True" 
+			 xmlns:data="clr-namespace:NetworkService.Model">
+	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto"/>
-			<RowDefinition Height="Auto"/>
-			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="2*"/>
+			<RowDefinition Height="1*"/>
 		</Grid.RowDefinitions>
-		<Label Grid.Row="0" Content="Network Entities" HorizontalAlignment="Center" VerticalAlignment="Top"></Label>
+		<Label Grid.Row="0" Content="Network Entities" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="22"></Label>
 		<StackPanel Orientation="Vertical" Grid.Row="1">
 			<StackPanel Orientation="Vertical">
-				<ListView x:Name="DERsList" ItemsSource="{Binding DERs}"
+				<ListView x:Name="DERsList" ItemsSource="{Binding Source={x:Static data:DistributedEnergyResources.DERs}}"
                           ScrollViewer.HorizontalScrollBarVisibility="Auto"
-                          ScrollViewer.VerticalScrollBarVisibility="Auto"/>
+                          ScrollViewer.VerticalScrollBarVisibility="Auto"
+						  SelectedItem="{Binding SelectedDER}">
+					<ListView.View>
+						<GridView>
+							<GridViewColumn Header="Image" Width="150">
+								<GridViewColumn.CellTemplate>
+									<DataTemplate>
+										<Image Source="{Binding Path=TypeOfDER.ImageSource}" Width="50" Height="50"/>
+									</DataTemplate>
+								</GridViewColumn.CellTemplate>
+							</GridViewColumn>
+							<GridViewColumn Header="Type" Width="150" DisplayMemberBinding="{Binding Path=TypeOfDER.Name}" />
+							<GridViewColumn Header="Id" Width="150" DisplayMemberBinding="{Binding Path=Id}" />
+							<GridViewColumn Header="Name" Width="150" DisplayMemberBinding="{Binding Path=Name}" />
+						</GridView>
+					</ListView.View>
+				</ListView>
 			</StackPanel>
 		</StackPanel>
 		<StackPanel Orientation="Vertical" Grid.Row="2">
 			<TextBlock Text="ID"/>
-			 
+			<TextBox Text="{Binding CurrentDER.Id}"></TextBox>
+			<TextBlock Text="{Binding CurrentDER.ValidationErrors[Id]}" Foreground="Red"/>
+
 			<TextBlock Text="Name"/>
+			<TextBox Text="{Binding CurrentDER.Name}"></TextBox>
+			<TextBlock Text="{Binding CurrentDER.ValidationErrors[Name]}" Foreground="Red"/>
+
 
 			<ComboBox ItemsSource="{Binding TypeOfDERs}" SelectedItem="{Binding CurrentDER.TypeOfDER}">
 				<ComboBox.ItemTemplate>
@@ -37,7 +59,11 @@
 					</ItemContainerTemplate>
 				</ComboBox.ItemTemplate>
 			</ComboBox>
+			<TextBlock Text="{Binding CurrentDER.ValidationErrors[TypeOfDER]}" Foreground="Red"/>
+
 			<Button Command="{Binding AddDER}">ADD</Button>
+			<Separator/>
+			<Button Command="{Binding DeleteDER}">DELETE</Button>
 		</StackPanel>
 	</Grid>
 </UserControl>

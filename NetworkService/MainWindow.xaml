@@ -7,7 +7,13 @@
 		xmlns:viewModels="clr-namespace:NetworkService.ViewModel"
 		xmlns:views="clr-namespace:NetworkService.Views"
         mc:Ignorable="d"
-        Title="MainWindow" Height="960" Width="640">
+        Title="MainWindow" Height="960" Width="640"
+		xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity">
+	<i:Interaction.Triggers>
+		<i:EventTrigger EventName="Closing">
+			<i:InvokeCommandAction Command="{Binding ClosingMainWindow}"/>
+		</i:EventTrigger>
+	</i:Interaction.Triggers>
 	<Window.DataContext>
 		<viewModels:MainWindowViewModel/>
 	</Window.DataContext>
