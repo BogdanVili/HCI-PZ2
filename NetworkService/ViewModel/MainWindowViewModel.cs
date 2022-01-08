@@ -69,10 +69,12 @@ namespace NetworkService.ViewModel
                             
                             string[] split = incomming.Split(':');
                             int id = Int32.Parse(split[0].Split('_')[1]);
-                            double valueMeasured = Double.Parse(split[1]);
+                            double valueMeasure = Double.Parse(split[1]);
 
-                            StaticData.loggedDatas.Add(new LoggedData(id, DateTime.Now, valueMeasured));
-                            StaticData.DataIO.SaveLog("Log.txt", new LoggedData(id, DateTime.Now, valueMeasured));
+                            StaticData.loggedDatas.Add(new LoggedData(StaticData.DERs[id].Id, DateTime.Now, valueMeasure));
+                            StaticData.DataIO.SaveLog("Log.txt", new LoggedData(id, DateTime.Now, valueMeasure));
+
+                            StaticData.DERs[id].ValueMeasure = valueMeasure;
                         }
                     }, null);
                 }

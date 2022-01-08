@@ -10,11 +10,22 @@ namespace NetworkService.ViewModel
 {
     public class NetworkEntitiesViewModel : BindableBase
     {
-        ObservableCollection<DistributedEnergyResource> DERs = StaticData.DERs;
+        private ObservableCollection<DistributedEnergyResource> ders;
+
+        public ObservableCollection<DistributedEnergyResource> DERs
+        {
+            get { return ders; }
+            set
+            {
+                ders = value;
+                OnPropertyChanged("DERs");
+            }
+        }
 
         public MyICommand AddDER { get; set; }
         public MyICommand DeleteDER { get; set; }
 
+        public MyICommand FilterDER { get; set; }
 
         private DistributedEnergyResourceCurrent currentDER = new DistributedEnergyResourceCurrent();
 
@@ -44,6 +55,8 @@ namespace NetworkService.ViewModel
 
         public NetworkEntitiesViewModel()
         {
+            DERs = StaticData.DERs;
+
             AddDER = new MyICommand(OnAddDER, OnUndoAddDER);
 
             TypeOfDERs = new ObservableCollection<TypeOfEnergyResource>();
@@ -51,6 +64,12 @@ namespace NetworkService.ViewModel
             TypeOfDERs.Add(new TypeOfEnergyResource("Wind Turbine", "C:\\Users\\bokic\\Desktop\\HCI PZ2\\NetworkService\\NetworkService\\Images\\windturbine.png"));
 
             DeleteDER = new MyICommand(OnDeleteDER, OnUndoDeleteDER);
+
+            FilterCurrent.MoreOrLessFilter = true;
+
+            FilterCurrent.TypeFilter = new TypeOfEnergyResource();
+
+            FilterDER = new MyICommand(OnFilterDER);
         }
 
 
@@ -92,6 +111,65 @@ namespace NetworkService.ViewModel
             {
                 DERs.Add(DeletedDERs.Last());
                 DeletedDERs.Remove(DeletedDERs.Last());
+            }
+        }
+
+        private Filter filterCurrent = new Filter();
+
+        public Filter FilterCurrent
+        {
+            get { return filterCurrent; }
+            set
+            {
+                filterCurrent = value;
+                OnPropertyChanged("FilterCurrent");
+            }
+        }
+
+
+        public void OnFilterDER()
+        {
+            if (string.IsNullOrWhiteSpace(FilterCurrent.TypeFilter.Name) && string.IsNullOrWhiteSpace(FilterCurrent.IdFilter))
+            {
+                return;
+            }
+
+            DERs = new ObservableCollection<DistributedEnergyResource>();
+            foreach (DistributedEnergyResource item in StaticData.DERs)
+            {
+                if (!string.IsNullOrWhiteSpace(FilterCurrent.TypeFilter.Name) && string.IsNullOrWhiteSpace(FilterCurrent.IdFilter))
+                {
+                    if (FilterCurrent.TypeFilter.Name.Equals(item.TypeOfDER.Name))
+                    {
+                        DERs.Add(new DistributedEnergyResource(item.Id, item.Name, item.TypeOfDER));
+                    }
+                    continue;
+                }
+
+                if(string.IsNullOrWhiteSpace(FilterCurrent.TypeFilter.Name) && !string.IsNullOrWhiteSpace(FilterCurrent.IdFilter))
+                {
+                    if(FilterCurrent.MoreOrLessFilter && Int32.Parse(FilterCurrent.IdFilter) < item.Id)
+                    {
+                        DERs.Add(new DistributedEnergyResource(item.Id, item.Name, item.TypeOfDER));
+                    }
+                    else if(!FilterCurrent.MoreOrLessFilter && Int32.Parse(FilterCurrent.IdFilter) > item.Id)
+                    {
+                        DERs.Add(new DistributedEnergyResource(item.Id, item.Name, item.TypeOfDER));
+                    }
+                    continue;
+                }
+
+                if (FilterCurrent.TypeFilter.Name.Equals(item.TypeOfDER.Name))
+                {
+                    if (FilterCurrent.MoreOrLessFilter && Int32.Parse(FilterCurrent.IdFilter) < item.Id)
+                    {
+                        DERs.Add(new DistributedEnergyResource(item.Id, item.Name, item.TypeOfDER));
+                    }
+                    else if (!FilterCurrent.MoreOrLessFilter && Int32.Parse(FilterCurrent.IdFilter) > item.Id)
+                    {
+                        DERs.Add(new DistributedEnergyResource(item.Id, item.Name, item.TypeOfDER));
+                    }
+                }
             }
         }
     }

@@ -65,6 +65,7 @@
     <Compile Include="ICommandUndo.cs" />
     <Compile Include="Model\Data.cs" />
     <Compile Include="Model\DistributedEnergyResourceCurrent.cs" />
+    <Compile Include="Model\Filter.cs" />
     <Compile Include="Model\LoggedData.cs" />
     <Compile Include="Model\StaticData.cs" />
     <Compile Include="Model\TypeOfEnergyResource.cs" />
