@@ -71,8 +71,9 @@ namespace NetworkService.ViewModel
                             int id = Int32.Parse(split[0].Split('_')[1]);
                             double valueMeasure = Double.Parse(split[1]);
 
-                            StaticData.loggedDatas.Add(new LoggedData(StaticData.DERs[id].Id, DateTime.Now, valueMeasure));
-                            StaticData.DataIO.SaveLog("Log.txt", new LoggedData(id, DateTime.Now, valueMeasure));
+                            LoggedData loggedData = new LoggedData(StaticData.DERs[id].Id, DateTime.Now, valueMeasure);
+                            StaticData.loggedDatas.Add(loggedData);
+                            StaticData.DataIO.SaveLog("Log.txt", loggedData);
 
                             StaticData.DERs[id].ValueMeasure = valueMeasure;
                         }

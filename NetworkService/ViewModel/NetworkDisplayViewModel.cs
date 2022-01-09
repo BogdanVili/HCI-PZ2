@@ -8,5 +8,10 @@ namespace NetworkService.ViewModel
 {
     public class NetworkDisplayViewModel : BindableBase
     {
+
+        public NetworkDisplayViewModel()
+        {
+
+        }
     }
 }

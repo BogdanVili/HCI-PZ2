@@ -7,8 +7,21 @@
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="640"
 			 xmlns:vml="clr-namespace:NetworkService.VML"
-             vml:ViewModelLocator.AutoHookedUpViewModel="True">
+             vml:ViewModelLocator.AutoHookedUpViewModel="True"
+			 xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity">
 	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="1*"/>
+			<RowDefinition Height="4*"/>
+		</Grid.RowDefinitions>
 		<Label Grid.Row="0" Content="Measurement Graph" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="22"></Label>
+		<ComboBox Grid.Row="1" ItemsSource="{Binding UniqueIds}" SelectedItem="{Binding SelectedId}" Height="50" Width="200">
+			<i:Interaction.Triggers>
+				<i:EventTrigger EventName="SelectionChanged">
+					<i:InvokeCommandAction Command="{Binding IdSelectionChanged}" />
+				</i:EventTrigger>
+			</i:Interaction.Triggers>
+		</ComboBox>
 	</Grid>
 </UserControl>

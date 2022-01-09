@@ -74,9 +74,16 @@ namespace NetworkService.Model
                 }
                 else
                 {
-                    if (StaticData.DERs.FirstOrDefault(d => d.Id == Int32.Parse(Id)) != null)
+                    if(temp < 1)
                     {
-                        ValidationErrors["Id"] = "Id already exists.";
+                        ValidationErrors["Id"] = "Id must be a positive integer";
+                    }
+                    else
+                    {
+                        if (StaticData.DERs.FirstOrDefault(d => d.Id == Int32.Parse(Id)) != null)
+                        {
+                            ValidationErrors["Id"] = "Id already exists.";
+                        }
                     }
                 }
             }
