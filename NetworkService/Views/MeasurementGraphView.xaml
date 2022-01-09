@@ -23,5 +23,14 @@
 				</i:EventTrigger>
 			</i:Interaction.Triggers>
 		</ComboBox>
+		<Canvas Grid.Row="2">
+			<StackPanel Orientation="Vertical">
+				<Label Content="{Binding SelectedLogs[0].Time}"></Label>
+				<Label Content="{Binding SelectedLogs[1].Time}"></Label>
+				<Label Content="{Binding SelectedLogs[2].Time}"></Label>
+				<Label Content="{Binding SelectedLogs[3].Time}"></Label>
+				<Label Content="{Binding SelectedLogs[4].Time}"></Label>
+			</StackPanel>
+		</Canvas>
 	</Grid>
 </UserControl>

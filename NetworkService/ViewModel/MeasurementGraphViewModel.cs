@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,7 +20,6 @@ namespace NetworkService.ViewModel
             { 
                 loggedDatas = value;
                 OnPropertyChanged("LoggedDatas");
-                OnIdSelectionChanged();
             }
         }
 
@@ -29,6 +29,7 @@ namespace NetworkService.ViewModel
             uniqueIds = new List<int>();
             SelectUniqueIds();
             IdSelectionChanged = new MyICommand(OnIdSelectionChanged);
+            loggedDatas.CollectionChanged += LoggedDatasChanged;
         }
 
         private List<int> uniqueIds;
@@ -95,8 +96,13 @@ namespace NetworkService.ViewModel
                     }
                 }
 
-                SelectedLogs = (ObservableCollection<LoggedData>)SelectedLogs.Reverse();
+                SelectedLogs = new ObservableCollection<LoggedData>(SelectedLogs.Reverse());
             }
+        }
+
+        void LoggedDatasChanged(object sender, NotifyCollectionChangedEventArgs args)
+        {
+            OnIdSelectionChanged();
         }
     }
 }
