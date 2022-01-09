@@ -29,43 +29,41 @@
 					</ItemContainerTemplate>
 				</ComboBox.ItemTemplate>
 			</ComboBox>
-			<Label Content="ID" Margin="0,27,0,0"/>
+			<Label Content="ID" Margin="0,30,0,0"/>
 			<StackPanel Orientation="Vertical">
-				<RadioButton GroupName="MoreOrLess" Margin="0 17" IsChecked="{Binding FilterCurrent.MoreOrLessFilter}"/>
+				<RadioButton GroupName="MoreOrLess" Margin="0 20" IsChecked="{Binding FilterCurrent.MoreOrLessFilter}"/>
 				<RadioButton GroupName="MoreOrLess"/>
 			</StackPanel>
 			<StackPanel Orientation="Vertical">
-				<Label Content="&gt;" Margin="0 7.5"/>
+				<Label Content="&gt;" Margin="0 12"/>
 				<Label Content="&lt;"/>
 			</StackPanel>
 			<TextBox Width="30" Height="20" Margin="10" Text="{Binding FilterCurrent.IdFilter}"></TextBox>
 			<Button Width="80" Height="30" Margin="10" Command="{Binding FilterDER}">Filter</Button>
 		</StackPanel>
 
-		<StackPanel Orientation="Vertical" Grid.Row="2">
-			<StackPanel Orientation="Vertical">
-				<ListView x:Name="DERsList" ItemsSource="{Binding DERs, Mode=TwoWay}"
+		<Grid Grid.Row="2">
+			<ListView x:Name="DERsList" ItemsSource="{Binding DERs, Mode=TwoWay}"
                           ScrollViewer.HorizontalScrollBarVisibility="Auto"
-                          ScrollViewer.VerticalScrollBarVisibility="Auto"
+                          ScrollViewer.VerticalScrollBarVisibility="Visible"
 						  SelectedItem="{Binding SelectedDER}">
-					<ListView.View>
-						<GridView>
-							<GridViewColumn Header="Image" Width="120">
-								<GridViewColumn.CellTemplate>
-									<DataTemplate>
-										<Image Source="{Binding Path=TypeOfDER.ImageSource}" Width="50" Height="50"/>
-									</DataTemplate>
-								</GridViewColumn.CellTemplate>
-							</GridViewColumn>
-							<GridViewColumn Header="Type" Width="120" DisplayMemberBinding="{Binding Path=TypeOfDER.Name}" />
-							<GridViewColumn Header="Id" Width="120" DisplayMemberBinding="{Binding Path=Id}" />
-							<GridViewColumn Header="Name" Width="120" DisplayMemberBinding="{Binding Path=Name}" />
-							<GridViewColumn Header="Value" Width="120" DisplayMemberBinding="{Binding Path=ValueMeasure, Mode=TwoWay}" />
-						</GridView>
-					</ListView.View>
-				</ListView>
-			</StackPanel>
-		</StackPanel>
+				<ListView.View>
+					<GridView>
+						<GridViewColumn Header="Image" Width="120">
+							<GridViewColumn.CellTemplate>
+								<DataTemplate>
+									<Image Source="{Binding Path=TypeOfDER.ImageSource}" Width="50" Height="50" HorizontalAlignment="Center"/>
+								</DataTemplate>
+							</GridViewColumn.CellTemplate>
+						</GridViewColumn>
+						<GridViewColumn Header="Type" Width="120" DisplayMemberBinding="{Binding Path=TypeOfDER.Name}"/>
+						<GridViewColumn Header="Id" Width="120" DisplayMemberBinding="{Binding Path=Id}" />
+						<GridViewColumn Header="Name" Width="120" DisplayMemberBinding="{Binding Path=Name}" />
+						<GridViewColumn Header="Value" Width="120" DisplayMemberBinding="{Binding Path=ValueMeasure, Mode=TwoWay}" />
+					</GridView>
+				</ListView.View>
+			</ListView>
+		</Grid>
 
 		<StackPanel Orientation="Vertical" Grid.Row="3">
 			<TextBlock Text="ID"/>

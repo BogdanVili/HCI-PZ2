@@ -14,6 +14,7 @@
 			<RowDefinition Height="Auto"/>
 			<RowDefinition Height="1*"/>
 			<RowDefinition Height="4*"/>
+			<RowDefinition Height="2*"/>
 		</Grid.RowDefinitions>
 		<Label Grid.Row="0" Content="Measurement Graph" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="22"></Label>
 		<ComboBox Grid.Row="1" ItemsSource="{Binding UniqueIds}" SelectedItem="{Binding SelectedId}" Height="50" Width="200">
@@ -23,13 +24,31 @@
 				</i:EventTrigger>
 			</i:Interaction.Triggers>
 		</ComboBox>
-		<Canvas Grid.Row="2">
-			<StackPanel Orientation="Vertical">
-				<Label Content="{Binding SelectedLogs[0].Time}"></Label>
-				<Label Content="{Binding SelectedLogs[1].Time}"></Label>
-				<Label Content="{Binding SelectedLogs[2].Time}"></Label>
-				<Label Content="{Binding SelectedLogs[3].Time}"></Label>
-				<Label Content="{Binding SelectedLogs[4].Time}"></Label>
+		<Canvas Grid.Row="2" Margin="0 0 0 20">
+			<Label Content="{Binding SelectedLogs[0].ValueMeasure}" Canvas.Left="50" Canvas.Bottom="{Binding ValuePosition[0]}"></Label>
+			<Ellipse Width="40" Height="40" StrokeThickness="{Binding CircleStrokeThickness}" Stroke="Black" Canvas.Left="38" Canvas.Bottom="{Binding CirclePosition[0]}"></Ellipse>
+			
+			<Label Content="{Binding SelectedLogs[1].ValueMeasure}" Canvas.Left="175" Canvas.Bottom="{Binding ValuePosition[1]}"></Label>
+			<Ellipse Width="40" Height="40" StrokeThickness="{Binding CircleStrokeThickness}" Stroke="Black" Canvas.Left="163" Canvas.Bottom="{Binding CirclePosition[1]}"></Ellipse>
+
+			<Label Content="{Binding SelectedLogs[2].ValueMeasure}" Canvas.Left="295" Canvas.Bottom="{Binding ValuePosition[2]}"></Label>
+			<Ellipse Width="40" Height="40" StrokeThickness="{Binding CircleStrokeThickness}" Stroke="Black" Canvas.Left="283" Canvas.Bottom="{Binding CirclePosition[2]}"></Ellipse>
+
+			<Label Content="{Binding SelectedLogs[3].ValueMeasure}" Canvas.Left="410" Canvas.Bottom="{Binding ValuePosition[3]}"></Label>
+			<Ellipse Width="40" Height="40" StrokeThickness="{Binding CircleStrokeThickness}" Stroke="Black" Canvas.Left="398" Canvas.Bottom="{Binding CirclePosition[3]}"></Ellipse>
+
+			<Label Content="{Binding SelectedLogs[4].ValueMeasure}" Canvas.Left="530" Canvas.Bottom="{Binding ValuePosition[4]}"></Label>
+			<Ellipse Width="40" Height="40" StrokeThickness="{Binding CircleStrokeThickness}" Stroke="Black" Canvas.Left="518" Canvas.Bottom="{Binding CirclePosition[4]}"></Ellipse>
+
+		</Canvas>
+		<Canvas Grid.Row="3">
+			<Line X1="0" X2="640" StrokeThickness="5" Stroke="Black"></Line>
+			<StackPanel Orientation="Horizontal">
+				<Label Content="{Binding SelectedLogs[0].Time}" ContentStringFormat="dd:MM:yyyy HH:mm" Margin="10"></Label>
+				<Label Content="{Binding SelectedLogs[1].Time}" ContentStringFormat="dd:MM:yyyy HH:mm" Margin="10"></Label>
+				<Label Content="{Binding SelectedLogs[2].Time}" ContentStringFormat="dd:MM:yyyy HH:mm" Margin="10"></Label>
+				<Label Content="{Binding SelectedLogs[3].Time}" ContentStringFormat="dd:MM:yyyy HH:mm" Margin="10"></Label>
+				<Label Content="{Binding SelectedLogs[4].Time}" ContentStringFormat="dd:MM:yyyy HH:mm" Margin="10"></Label>
 			</StackPanel>
 		</Canvas>
 	</Grid>

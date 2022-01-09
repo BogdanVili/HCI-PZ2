@@ -83,6 +83,9 @@ namespace NetworkService.ViewModel
             if (!(SelectedId < 1))
             {
                 SelectedLogs = new ObservableCollection<LoggedData>();
+                ValuePosition = new ObservableCollection<int>();
+                CirclePosition = new ObservableCollection<int>();
+                CircleStrokeThickness = 3;
 
                 foreach (LoggedData l in LoggedDatas.Reverse())
                 {
@@ -93,10 +96,14 @@ namespace NetworkService.ViewModel
                     if(l.Id == SelectedId)
                     {
                         SelectedLogs.Add(l);
+                        ValuePosition.Add(Int32.Parse(l.ValueMeasure.ToString()) * 25);
+                        CirclePosition.Add(Int32.Parse(l.ValueMeasure.ToString()) * 25 - 10);
                     }
                 }
 
                 SelectedLogs = new ObservableCollection<LoggedData>(SelectedLogs.Reverse());
+                ValuePosition = new ObservableCollection<int>(ValuePosition.Reverse());
+                CirclePosition = new ObservableCollection<int>(CirclePosition.Reverse());
             }
         }
 
@@ -104,5 +111,42 @@ namespace NetworkService.ViewModel
         {
             OnIdSelectionChanged();
         }
+
+        private ObservableCollection<int> valuePosition;
+
+        public ObservableCollection<int> ValuePosition
+        {
+            get { return valuePosition; }
+            set 
+            { 
+                valuePosition = value;
+                OnPropertyChanged("ValuePosition");
+            }
+        }
+
+        private ObservableCollection<int> circlePosition;
+
+        public ObservableCollection<int> CirclePosition
+        {
+            get { return circlePosition; }
+            set
+            {
+                circlePosition = value;
+                OnPropertyChanged("CirclePosition");
+            }
+        }
+
+        private int circleStrokeThickness = 0;
+
+        public int CircleStrokeThickness
+        {
+            get { return circleStrokeThickness; }
+            set 
+            { 
+                circleStrokeThickness = value;
+                OnPropertyChanged("CircleStrokeThickness");
+            }
+        }
+
     }
 }
