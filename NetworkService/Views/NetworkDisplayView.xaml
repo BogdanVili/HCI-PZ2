@@ -5,11 +5,10 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:NetworkService.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300"
+             d:DesignHeight="600" d:DesignWidth="640"
 			 xmlns:vml="clr-namespace:NetworkService.VML"
              vml:ViewModelLocator.AutoHookedUpViewModel="True">
-    <Grid>
-		<Label Content="Display" HorizontalAlignment="Center"></Label>
-
+	<Grid>
+		<Label Grid.Row="0" Content="Display" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="22"></Label>
 	</Grid>
 </UserControl>

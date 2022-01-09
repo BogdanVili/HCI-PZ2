@@ -61,23 +61,27 @@ namespace NetworkService.Model
 
         protected override void ValidateSelf()
         {
-            int temp;
-            if (!Int32.TryParse(id, out temp))
-            {
-                ValidationErrors["Id"] = "Id must be an integer.";
-            }
-
             if (string.IsNullOrWhiteSpace(id))
             {
                 ValidationErrors["Id"] = "Id is required.";
             }
-
-            if (StaticData.DERs.FirstOrDefault(d => d.Id == Int32.Parse(Id)) != null)
+            else
             {
-                ValidationErrors["Id"] = "Id already exists.";
+                int temp;
+                if (!Int32.TryParse(id, out temp))
+                {
+                    ValidationErrors["Id"] = "Id must be an integer.";
+                }
+                else
+                {
+                    if (StaticData.DERs.FirstOrDefault(d => d.Id == Int32.Parse(Id)) != null)
+                    {
+                        ValidationErrors["Id"] = "Id already exists.";
+                    }
+                }
             }
 
-                if (string.IsNullOrWhiteSpace(name))
+            if (string.IsNullOrWhiteSpace(name))
             {
                 ValidationErrors["Name"] = "Name is required.";
             }

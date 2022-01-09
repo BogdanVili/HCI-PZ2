@@ -26,7 +26,8 @@ namespace NetworkService.Model
 
         public TypeOfEnergyResource()
         {
-
+            this.name = "";
+            this.imageSource = "";
         }
 
         public TypeOfEnergyResource(string name, string imageSource)

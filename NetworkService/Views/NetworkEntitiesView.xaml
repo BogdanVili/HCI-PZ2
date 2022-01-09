@@ -13,13 +13,13 @@
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto"/>
 			<RowDefinition Height="1*"/>
-			<RowDefinition Height="4*"/>
+			<RowDefinition Height="3*"/>
 			<RowDefinition Height="2*"/>
 		</Grid.RowDefinitions>
 		<Label Grid.Row="0" Content="Network Entities" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="22"></Label>
 
 		<StackPanel Orientation="Horizontal" Grid.Row="1">
-			<ComboBox ItemsSource="{Binding TypeOfDERs}" SelectedItem="{Binding FilterCurrent.TypeFilter}" Width="100" Height="40" Margin="20">
+			<ComboBox SelectedItem="{Binding FilterCurrent.TypeFilter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding TypeOfDERs}"  Width="100" Height="40" Margin="20">
 				<ComboBox.ItemTemplate>
 					<ItemContainerTemplate>
 						<StackPanel Orientation="Horizontal">
@@ -89,9 +89,9 @@
 			</ComboBox>
 			<TextBlock Text="{Binding CurrentDER.ValidationErrors[TypeOfDER]}" Foreground="Red"/>
 
-			<Button Command="{Binding AddDER}">ADD</Button>
+			<Button Command="{Binding AddDER}" Margin="10">ADD</Button>
 			<Separator/>
-			<Button Command="{Binding DeleteDER}">DELETE</Button>
+			<Button Command="{Binding DeleteDER}" Margin="10">DELETE</Button>
 		</StackPanel>
 	</Grid>
 </UserControl>

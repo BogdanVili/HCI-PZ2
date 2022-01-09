@@ -47,6 +47,14 @@ namespace NetworkService.Model
         public Filter()
         {
             TypeFilter = new TypeOfEnergyResource();
+            moreOrLessFilter = true;
+        }
+
+        public Filter(TypeOfEnergyResource typeFilter, bool moreOrLessFilter, string idFilter)
+        {
+            this.typeFilter = typeFilter;
+            this.moreOrLessFilter = moreOrLessFilter;
+            this.idFilter = idFilter;
         }
     }
 }

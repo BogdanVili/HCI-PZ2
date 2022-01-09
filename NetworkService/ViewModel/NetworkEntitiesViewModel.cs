@@ -65,16 +65,16 @@ namespace NetworkService.ViewModel
 
             DeleteDER = new MyICommand(OnDeleteDER, OnUndoDeleteDER);
 
-            FilterCurrent.MoreOrLessFilter = true;
-
             FilterCurrent.TypeFilter = new TypeOfEnergyResource();
 
-            FilterDER = new MyICommand(OnFilterDER);
+            FilterDER = new MyICommand(OnFilterDER, OnUndoFilterDER);
+
+            UndoFilters.Add(null);
         }
 
 
         public void OnAddDER()
-        {   
+        {
             CurrentDER.Validate();
             if (CurrentDER.IsValid)
             {
@@ -98,7 +98,7 @@ namespace NetworkService.ViewModel
         List<DistributedEnergyResource> DeletedDERs = new List<DistributedEnergyResource>();
         public void OnDeleteDER()
         {
-            if(SelectedDER != null)
+            if (SelectedDER != null)
             {
                 DeletedDERs.Add(SelectedDER);
                 DERs.Remove(SelectedDER);
@@ -107,7 +107,7 @@ namespace NetworkService.ViewModel
 
         public void OnUndoDeleteDER()
         {
-            if(DeletedDERs.Count > 0)
+            if (DeletedDERs.Count > 0)
             {
                 DERs.Add(DeletedDERs.Last());
                 DeletedDERs.Remove(DeletedDERs.Last());
@@ -134,6 +134,8 @@ namespace NetworkService.ViewModel
                 return;
             }
 
+            UndoFilters.Add(new Filter(FilterCurrent.TypeFilter, filterCurrent.MoreOrLessFilter, filterCurrent.IdFilter));
+
             DERs = new ObservableCollection<DistributedEnergyResource>();
             foreach (DistributedEnergyResource item in StaticData.DERs)
             {
@@ -146,13 +148,93 @@ namespace NetworkService.ViewModel
                     continue;
                 }
 
-                if(string.IsNullOrWhiteSpace(FilterCurrent.TypeFilter.Name) && !string.IsNullOrWhiteSpace(FilterCurrent.IdFilter))
+                if (string.IsNullOrWhiteSpace(FilterCurrent.TypeFilter.Name) && !string.IsNullOrWhiteSpace(FilterCurrent.IdFilter))
                 {
-                    if(FilterCurrent.MoreOrLessFilter && Int32.Parse(FilterCurrent.IdFilter) < item.Id)
+                    if (FilterCurrent.MoreOrLessFilter && Int32.Parse(FilterCurrent.IdFilter) < item.Id)
                     {
                         DERs.Add(new DistributedEnergyResource(item.Id, item.Name, item.TypeOfDER));
                     }
-                    else if(!FilterCurrent.MoreOrLessFilter && Int32.Parse(FilterCurrent.IdFilter) > item.Id)
+                    else if (!FilterCurrent.MoreOrLessFilter && Int32.Parse(FilterCurrent.IdFilter) > item.Id)
+                    {
+                        DERs.Add(new DistributedEnergyResource(item.Id, item.Name, item.TypeOfDER));
+                    }
+                    continue;
+                }
+
+                if (FilterCurrent.TypeFilter.Name.Equals(item.TypeOfDER.Name))
+                {
+                    if (FilterCurrent.MoreOrLessFilter && Int32.Parse(FilterCurrent.IdFilter) < item.Id)
+                    {
+                        DERs.Add(new DistributedEnergyResource(item.Id, item.Name, item.TypeOfDER));
+                    }
+                    else if (!FilterCurrent.MoreOrLessFilter && Int32.Parse(FilterCurrent.IdFilter) > item.Id)
+                    {
+                        DERs.Add(new DistributedEnergyResource(item.Id, item.Name, item.TypeOfDER));
+                    }
+                }
+            }
+        }
+
+        List<Filter> UndoFilters = new List<Filter>();
+
+        public void OnUndoFilterDER()
+        {
+            if (UndoFilters.Count > 0)
+            {
+                if (UndoFilters.Count > 1)
+                {
+                    UndoFilters.RemoveAt(UndoFilters.Count - 1);
+                }
+
+                FilterUndo(UndoFilters[UndoFilters.Count - 1]);
+
+                if (UndoFilters[UndoFilters.Count - 1] == null)
+                {
+                    DERs = StaticData.DERs;
+                    FilterCurrent = null;
+                    FilterCurrent = new Filter();
+                    return;
+                }
+                else
+                {
+                    FilterCurrent = UndoFilters[UndoFilters.Count - 1];
+                }
+            }
+        }
+
+        public void FilterUndo(Filter FilterCurrent)
+        {
+            if(FilterCurrent == null)
+            {
+                DERs = StaticData.DERs;
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(FilterCurrent.TypeFilter.Name) && string.IsNullOrWhiteSpace(FilterCurrent.IdFilter))
+            {
+                DERs = StaticData.DERs;
+                return;
+            }
+
+            DERs = new ObservableCollection<DistributedEnergyResource>();
+            foreach (DistributedEnergyResource item in StaticData.DERs)
+            {
+                if (!string.IsNullOrWhiteSpace(FilterCurrent.TypeFilter.Name) && string.IsNullOrWhiteSpace(FilterCurrent.IdFilter))
+                {
+                    if (FilterCurrent.TypeFilter.Name.Equals(item.TypeOfDER.Name))
+                    {
+                        DERs.Add(new DistributedEnergyResource(item.Id, item.Name, item.TypeOfDER));
+                    }
+                    continue;
+                }
+
+                if (string.IsNullOrWhiteSpace(FilterCurrent.TypeFilter.Name) && !string.IsNullOrWhiteSpace(FilterCurrent.IdFilter))
+                {
+                    if (FilterCurrent.MoreOrLessFilter && Int32.Parse(FilterCurrent.IdFilter) < item.Id)
+                    {
+                        DERs.Add(new DistributedEnergyResource(item.Id, item.Name, item.TypeOfDER));
+                    }
+                    else if (!FilterCurrent.MoreOrLessFilter && Int32.Parse(FilterCurrent.IdFilter) > item.Id)
                     {
                         DERs.Add(new DistributedEnergyResource(item.Id, item.Name, item.TypeOfDER));
                     }
