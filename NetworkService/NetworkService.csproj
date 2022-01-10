@@ -99,12 +99,10 @@
     <Compile Include="MyICommand.cs" />
     <Compile Include="ValidationBase.cs" />
     <Compile Include="ValidationErrors.cs" />
-    <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\MeasurementGraphViewModel.cs" />
     <Compile Include="ViewModel\NetworkDisplayViewModel.cs" />
     <Compile Include="ViewModel\NetworkEntitiesViewModel.cs" />
-    <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="Views\MeasurementGraphView.xaml.cs">
       <DependentUpon>MeasurementGraphView.xaml</DependentUpon>
     </Compile>

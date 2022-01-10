@@ -1,55 +1,101 @@
-﻿using System;
+﻿using NetworkService.Model;
+using NetworkService.Views;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace NetworkService.ViewModel
 {
     public class NetworkDisplayViewModel : BindableBase
     {
-        public MyICommand<object> GetSender { get; set; }
-        public MyICommand<MouseButtonEventArgs> GetMouseButtonEventArgs { get; set; }
-        public MyICommand<DragEventArgs> GetDragEventArgs { get; set; }
+        private ObservableCollection<DistributedEnergyResource> ders = new ObservableCollection<DistributedEnergyResource>();
 
-        public MyICommand ClickCommand { get; set; }
+        public ObservableCollection<DistributedEnergyResource> DERs
+        {
+            get { return ders; }
+            set
+            {
+                ders = value;
+                OnPropertyChanged("DERs");
+            }
+        }
+        public MyICommand<object> GetCanvas { get; set; }
+        public MyICommand<object> GetListView { get; set; }
+        public MyICommand<object> GetBorder { get; set; }
+        public MyICommand<DragEventArgs> GetDragEventArgs { get; set; }
+        public MyICommand ListView_SelectionChanged { get; set; }
+        public MyICommand ListView_MouseLeftButtonUp { get; set; }
+        public MyICommand DragOver { get; set; }
+        public MyICommand Drop { get; set; }
+
         public NetworkDisplayViewModel()
         {
-            GetSender = new MyICommand<object>(OnGetSender);
-            GetMouseButtonEventArgs = new MyICommand<MouseButtonEventArgs>(OnGetMouseButtonEventArgs);
+            foreach(DistributedEnergyResource item in StaticData.DERs)
+            {
+                DERs.Add(new DistributedEnergyResource(item));
+            }
+
+            StaticData.DERs.CollectionChanged += ChangeBorder;
+
+            GetCanvas = new MyICommand<object>(OnGetCanvas);
+            GetListView = new MyICommand<object>(OnGetListView);
+            GetBorder = new MyICommand<object>(OnGetBorder);
             GetDragEventArgs = new MyICommand<DragEventArgs>(OnGetDragEventArgs);
-            ClickCommand = new MyICommand(OnClickCommand);
+            ListView_SelectionChanged = new MyICommand(OnListView_SelectionChanged);
+            ListView_MouseLeftButtonUp = new MyICommand(OnListView_MouseLeftButtonUp);
+            DragOver = new MyICommand(OnDragOver);
+            Drop = new MyICommand(OnDrop);
         }
 
-        private object parameter;
+        private Canvas canvas;
 
-        public object Parameter
+        public Canvas Canvas
         {
-            get { return parameter; }
-            set { parameter = value; }
+            get { return canvas; }
+            set { canvas = value; }
         }
 
 
-        private void OnGetSender(object parameter)
+        private void OnGetCanvas(object parameter)
         {
-            Parameter = parameter;
+            Canvas = (Canvas)parameter;
         }
 
-        private MouseButtonEventArgs mouseButtonEventArgs;
+        private ListView listView;
 
-        public MouseButtonEventArgs MouseButtonEventArgs
+        public ListView ListView
         {
-            get { return mouseButtonEventArgs; }
-            set { mouseButtonEventArgs = value; }
+            get { return listView; }
+            set { listView = value; }
         }
 
-        private void OnGetMouseButtonEventArgs(MouseButtonEventArgs e)
+        private void OnGetListView(object parameter)
         {
-            MouseButtonEventArgs = e;
+            ListView = (ListView)parameter;
         }
+
+        private Border border;
+
+        public Border Border
+        {
+            get { return border; }
+            set { border = value; }
+        }
+
+        private void OnGetBorder(object parameter)
+        {
+            Border = (Border)parameter;
+        }
+
 
         private DragEventArgs dragEventArgs;
 
@@ -64,11 +110,86 @@ namespace NetworkService.ViewModel
             DragEventArgs = e;
         }
 
-        private void OnClickCommand()
+        private DistributedEnergyResource selectedDER;
+
+        public DistributedEnergyResource SelectedDER
         {
-            int i = 0;
+            get { return selectedDER; }
+            set
+            {
+                selectedDER = value;
+                OnPropertyChanged("SelectedDER");
+            }
         }
 
+        private bool dragging = false;
+
+        //List
+        private void OnListView_SelectionChanged()
+        {
+            if (!dragging)
+            {
+                dragging = true;
+
+                DragDrop.DoDragDrop(ListView, SelectedDER, DragDropEffects.Copy | DragDropEffects.Move);
+            }
+        }
+
+        //List
+        private void OnListView_MouseLeftButtonUp()
+        {
+            ListView.SelectedItem = null;
+            dragging = false;
+        }
+
+        //Canvas
+        private void OnDragOver()
+        {
+            if (Canvas.Resources["taken"] != null)
+            {
+                DragEventArgs.Effects = DragDropEffects.None;
+            }
+            else
+            {
+                DragEventArgs.Effects = DragDropEffects.Move;
+            }
+            DragEventArgs.Handled = true;
+        }
+
+        //Canvas
+        private void OnDrop()
+        {
+            if (SelectedDER.TypeOfDER.Name != "")
+            {
+                if (Canvas.Resources["taken"] == null)
+                {
+                    BitmapImage logo = new BitmapImage();
+                    logo.BeginInit();
+                    logo.UriSource = new Uri(SelectedDER.TypeOfDER.ImageSource);
+                    logo.EndInit();
+                    Canvas.Background = new ImageBrush(logo);
+                    ((TextBlock)Canvas.Children[0]).Text = SelectedDER.Id.ToString() + " : " + SelectedDER.Name;
+                    if (SelectedDER.ValueMeasure > 5)
+                    {
+                        Border.BorderBrush = Brushes.Red;
+                    }
+                    else
+                    {
+                        Border.BorderBrush = Brushes.Green;
+                    }
+                    Canvas.Resources.Add("taken", true);
+                    DERs.Remove(SelectedDER);
+                }
+                ListView.SelectedItem = null;
+                dragging = false;
+            }
+            DragEventArgs.Handled = true;
+        }
+
+        private void ChangeBorder(object sender, NotifyCollectionChangedEventArgs args)
+        {
+
+        }
     }
 
 }

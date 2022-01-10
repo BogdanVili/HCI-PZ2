@@ -83,6 +83,12 @@ namespace NetworkService.Model
             this.typeOfDER = typeOfDER;
         }
 
-
+        public DistributedEnergyResource(DistributedEnergyResource d)
+        {
+            this.id = d.id;
+            this.name = d.name;
+            this.typeOfDER = d.typeOfDER;
+            this.valueMeasure = d.valueMeasure;
+        }
     }
 }
