@@ -7,8 +7,21 @@
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="640"
 			 xmlns:vml="clr-namespace:NetworkService.VML"
-             vml:ViewModelLocator.AutoHookedUpViewModel="True">
+             vml:ViewModelLocator.AutoHookedUpViewModel="True"
+			 xmlns:prism="clr-namespace:Microsoft.Practices.Prism.Commands;assembly=Microsoft.Practices.Prism.Mvvm"
+			 xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
+			 xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity">
 	<Grid>
 		<Label Grid.Row="0" Content="Display" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="22"></Label>
+		<Canvas x:Name="Canvas1" Height="300" Width="300">
+			<i:Interaction.Triggers>
+				<i:EventTrigger EventName="MouseLeftButtonUp">
+					<cmd:EventToCommand Command="{Binding GetSender}" CommandParameter="{Binding ElementName=Canvas1}"/>
+					<cmd:EventToCommand Command="{Binding GetMouseButtonEventArgs}" PassEventArgsToCommand="True"/>
+					<cmd:EventToCommand Command="{Binding ClickCommand}"/>
+				</i:EventTrigger>
+			</i:Interaction.Triggers>
+			<Rectangle Fill="Green" Height="200" Width="200"></Rectangle>
+		</Canvas>
 	</Grid>
 </UserControl>
