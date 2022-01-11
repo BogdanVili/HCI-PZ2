@@ -88,6 +88,7 @@
     </ApplicationDefinition>
     <Compile Include="BindableBase.cs" />
     <Compile Include="ICommandUndo.cs" />
+    <Compile Include="Model\CanvasElements.cs" />
     <Compile Include="Model\Data.cs" />
     <Compile Include="Model\DistributedEnergyResourceCurrent.cs" />
     <Compile Include="Model\EventCommandExecuter.cs" />

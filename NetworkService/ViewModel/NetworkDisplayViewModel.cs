@@ -44,7 +44,7 @@ namespace NetworkService.ViewModel
                 DERs.Add(new DistributedEnergyResource(item));
             }
 
-            StaticData.DERs.CollectionChanged += ChangeBorder;
+            loggedDatas.CollectionChanged += ChangeBorder;
 
             GetCanvas = new MyICommand<object>(OnGetCanvas);
             GetListView = new MyICommand<object>(OnGetListView);
@@ -171,13 +171,15 @@ namespace NetworkService.ViewModel
                     ((TextBlock)Canvas.Children[0]).Text = SelectedDER.Id.ToString() + " : " + SelectedDER.Name;
                     if (SelectedDER.ValueMeasure > 5)
                     {
-                        Border.BorderBrush = Brushes.Red;
+                        Border.BorderBrush = red;
                     }
                     else
                     {
-                        Border.BorderBrush = Brushes.Green;
+                        Border.BorderBrush = green;
                     }
                     Canvas.Resources.Add("taken", true);
+                    Canvas.Resources.Add("DER", SelectedDER);
+                    CanvasElements.Add(new CanvasElements(Canvas, Border, SelectedDER));
                     DERs.Remove(SelectedDER);
                 }
                 ListView.SelectedItem = null;
@@ -186,9 +188,22 @@ namespace NetworkService.ViewModel
             DragEventArgs.Handled = true;
         }
 
+        List<CanvasElements> CanvasElements = new List<CanvasElements>();
+
+        ObservableCollection<LoggedData> loggedDatas = StaticData.loggedDatas;
+
+        SolidColorBrush red = Brushes.Red;
+        SolidColorBrush green = Brushes.Green;
+
         private void ChangeBorder(object sender, NotifyCollectionChangedEventArgs args)
         {
-
+            foreach(LoggedData log in StaticData.loggedDatas)
+            {
+                if(CanvasElements.Find(c => c.DER.Id == log.Id) != null)
+                {
+                    CanvasElements.Find(c => c.DER.Id == log.Id).DER.ValueMeasure = log.ValueMeasure;
+                }
+            }
         }
     }
 
