@@ -44,7 +44,9 @@ namespace NetworkService.ViewModel
                 DERs.Add(new DistributedEnergyResource(item));
             }
 
-            loggedDatas.CollectionChanged += ChangeBorder;
+            CanvasElements = new List<CanvasElements>();
+
+            //loggedDatas.CollectionChanged += ChangeBorder;
 
             GetCanvas = new MyICommand<object>(OnGetCanvas);
             GetListView = new MyICommand<object>(OnGetListView);
@@ -54,6 +56,11 @@ namespace NetworkService.ViewModel
             ListView_MouseLeftButtonUp = new MyICommand(OnListView_MouseLeftButtonUp);
             DragOver = new MyICommand(OnDragOver);
             Drop = new MyICommand(OnDrop);
+
+            for(int i=0; i<16; i++)
+            {
+                CanvasNames.Add("Canvas" + i.ToString());
+            }
         }
 
         private Canvas canvas;
@@ -130,7 +137,6 @@ namespace NetworkService.ViewModel
             if (!dragging)
             {
                 dragging = true;
-
                 DragDrop.DoDragDrop(ListView, SelectedDER, DragDropEffects.Copy | DragDropEffects.Move);
             }
         }
@@ -169,17 +175,17 @@ namespace NetworkService.ViewModel
                     logo.EndInit();
                     Canvas.Background = new ImageBrush(logo);
                     ((TextBlock)Canvas.Children[0]).Text = SelectedDER.Id.ToString() + " : " + SelectedDER.Name;
-                    if (SelectedDER.ValueMeasure > 5)
+                    Canvas.Resources.Add("taken", true);
+                    Canvas.Resources.Add("DER", SelectedDER);
+                    if(SelectedDER.ValueMeasure > 5)
                     {
-                        Border.BorderBrush = red;
+                        Border.BorderBrush = new SolidColorBrush(Colors.Red);
                     }
                     else
                     {
-                        Border.BorderBrush = green;
+                        Border.BorderBrush = new SolidColorBrush(Colors.Green);
                     }
-                    Canvas.Resources.Add("taken", true);
-                    Canvas.Resources.Add("DER", SelectedDER);
-                    CanvasElements.Add(new CanvasElements(Canvas, Border, SelectedDER));
+                    CanvasElements.Add(new CanvasElements(Canvas.Name, Border.Name, new DistributedEnergyResource(SelectedDER)));
                     DERs.Remove(SelectedDER);
                 }
                 ListView.SelectedItem = null;
@@ -188,23 +194,55 @@ namespace NetworkService.ViewModel
             DragEventArgs.Handled = true;
         }
 
-        List<CanvasElements> CanvasElements = new List<CanvasElements>();
+        public List<CanvasElements> CanvasElements { get; set; }
 
         ObservableCollection<LoggedData> loggedDatas = StaticData.loggedDatas;
 
-        SolidColorBrush red = Brushes.Red;
-        SolidColorBrush green = Brushes.Green;
+
+
+        private List<string> canvasNames = new List<string>();
+
+        public List<string> CanvasNames
+        {
+            get { return canvasNames; }
+            set { canvasNames = value; }
+        }
+
+        public Dictionary<string, SolidColorBrush> BrushesDictionary = new Dictionary<string, SolidColorBrush>();
 
         private void ChangeBorder(object sender, NotifyCollectionChangedEventArgs args)
         {
-            foreach(LoggedData log in StaticData.loggedDatas)
+            foreach (LoggedData log in StaticData.loggedDatas)
             {
-                if(CanvasElements.Find(c => c.DER.Id == log.Id) != null)
+                if (CanvasElements.Find(c => c.DER.Id == log.Id) != null)
                 {
-                    CanvasElements.Find(c => c.DER.Id == log.Id).DER.ValueMeasure = log.ValueMeasure;
+                    CanvasElements ce = CanvasElements.Find(c => c.DER.Id == log.Id);
+                    ce.DER.ValueMeasure = log.ValueMeasure;
+
+                    if (ce.DER.ValueMeasure > 5)
+                    {
+                        BrushesDictionary[ce.GetBrushName()] = new SolidColorBrush(Colors.Red);
+                    }
+                    else
+                    {
+                        BrushesDictionary[ce.GetBrushName()] = new SolidColorBrush(Colors.Green);
+                    }
                 }
             }
         }
+
+        private SolidColorBrush brush0;
+
+        public SolidColorBrush Brush0
+        {
+            get { return brush0; }
+            set
+            {
+                brush0 = value;
+                OnPropertyChanged("Brush0");
+            }
+        }
+
     }
 
 }

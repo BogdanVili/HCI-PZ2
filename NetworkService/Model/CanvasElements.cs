@@ -9,17 +9,17 @@ namespace NetworkService.Model
 {
     public class CanvasElements
     {
-        private Canvas canvas;
+        private string canvas;
 
-        public Canvas Canvas
+        public string Canvas
         {
             get { return canvas; }
             set { canvas = value; }
         }
 
-        private Border border;
+        private string border;
 
-        public Border Border
+        public string Border
         {
             get { return border; }
             set { border = value; }
@@ -33,11 +33,16 @@ namespace NetworkService.Model
             set { der = value; }
         }
 
-        public CanvasElements(Canvas canvas, Border border, DistributedEnergyResource der)
+        public CanvasElements(string canvas, string border, DistributedEnergyResource der)
         {
             this.canvas = canvas;
             this.border = border;
             this.der = der;
+        }
+
+        public string GetBrushName()
+        {
+            return "Brush" + Canvas.Replace("Canvas", "");
         }
     }
 }

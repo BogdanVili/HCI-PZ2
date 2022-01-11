@@ -97,6 +97,7 @@
     <Compile Include="Model\StaticData.cs" />
     <Compile Include="Model\TypeOfEnergyResource.cs" />
     <Compile Include="Model\DistributedEnergyResource.cs" />
+    <Compile Include="Model\ValueToBrushConverter.cs" />
     <Compile Include="MyICommand.cs" />
     <Compile Include="ValidationBase.cs" />
     <Compile Include="ValidationErrors.cs" />

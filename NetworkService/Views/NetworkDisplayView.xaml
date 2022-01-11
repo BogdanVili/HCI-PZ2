@@ -11,7 +11,8 @@
 			 xmlns:prism="clr-namespace:Microsoft.Practices.Prism.Commands;assembly=Microsoft.Practices.Prism.Mvvm"
 			 xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
 			 xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
-			 AllowDrop="True">
+			 AllowDrop="True"
+			 xmlns:model="clr-namespace:NetworkService.Model">
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="1*"/>
@@ -22,301 +23,302 @@
 			<ColumnDefinition Width="1*"/>
 		</Grid.ColumnDefinitions>
 		<Label Grid.Row="0" Grid.ColumnSpan="2" Content="Display" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="22"></Label>
-
+		
+		
 		<Canvas Grid.Row="1" Background="PapayaWhip">
 			<Border x:Name="Border0" BorderThickness="3" Canvas.Left="24" Canvas.Top="18">
-			<Canvas x:Name="Canvas0" Width="75" Height="75"  AllowDrop="True" Background="GhostWhite">
-				<i:Interaction.Triggers>
-					<i:EventTrigger EventName="Drop">
-						<cmd:EventToCommand Command="{Binding GetCanvas}" CommandParameter="{Binding ElementName=Canvas0}"/>
-						<cmd:EventToCommand Command="{Binding GetBorder}" CommandParameter="{Binding ElementName=Border0}"/>
-						<cmd:EventToCommand Command="{Binding GetDragEventArgs}" PassEventArgsToCommand="True"/>
-						<cmd:EventToCommand Command="{Binding Drop}"/>
-					</i:EventTrigger>
-					<i:EventTrigger EventName="DragOver">
-						<cmd:EventToCommand Command="{Binding GetCanvas}" CommandParameter="{Binding ElementName=Canvas0}"/>
-						<cmd:EventToCommand Command="{Binding GetDragEventArgs}" PassEventArgsToCommand="True"/>
-						<cmd:EventToCommand Command="{Binding DragOver}"/>
-					</i:EventTrigger>
-				</i:Interaction.Triggers>
-				<TextBlock Text="Empty"></TextBlock>
-			</Canvas>
+				<Canvas x:Name="Canvas0" Width="75" Height="75"  AllowDrop="True" Background="GhostWhite">
+					<i:Interaction.Triggers>
+						<i:EventTrigger EventName="Drop">
+							<cmd:EventToCommand Command="{Binding GetCanvas}" CommandParameter="{Binding ElementName=Canvas0}"/>
+							<cmd:EventToCommand Command="{Binding GetBorder}" CommandParameter="{Binding ElementName=Border0}"/>
+							<cmd:EventToCommand Command="{Binding GetDragEventArgs}" PassEventArgsToCommand="True"/>
+							<cmd:EventToCommand Command="{Binding Drop}"/>
+						</i:EventTrigger>
+						<i:EventTrigger EventName="DragOver">
+							<cmd:EventToCommand Command="{Binding GetCanvas}" CommandParameter="{Binding ElementName=Canvas0}"/>
+							<cmd:EventToCommand Command="{Binding GetDragEventArgs}" PassEventArgsToCommand="True"/>
+							<cmd:EventToCommand Command="{Binding DragOver}"/>
+						</i:EventTrigger>
+					</i:Interaction.Triggers>
+					<TextBlock Text="Empty"></TextBlock>
+				</Canvas>
 			</Border>
 			<Border Name="Border1" BorderThickness="3" Canvas.Left="122" Canvas.Top="18">
-			<Canvas x:Name="Canvas1" Width="75" Height="75" AllowDrop="True" Background="GhostWhite">
-				<i:Interaction.Triggers>
-					<i:EventTrigger EventName="Drop">
-						<cmd:EventToCommand Command="{Binding GetCanvas}" CommandParameter="{Binding ElementName=Canvas1}"/>
-						<cmd:EventToCommand Command="{Binding GetBorder}" CommandParameter="{Binding ElementName=Border1}"/>
-						<cmd:EventToCommand Command="{Binding GetDragEventArgs}" PassEventArgsToCommand="True"/>
-						<cmd:EventToCommand Command="{Binding Drop}"/>
-					</i:EventTrigger>
-					<i:EventTrigger EventName="DragOver">
-						<cmd:EventToCommand Command="{Binding GetCanvas}" CommandParameter="{Binding ElementName=Canvas1}"/>
-						<cmd:EventToCommand Command="{Binding GetDragEventArgs}" PassEventArgsToCommand="True"/>
-						<cmd:EventToCommand Command="{Binding DragOver}"/>
-					</i:EventTrigger>
-				</i:Interaction.Triggers>
-				<TextBlock Text="Empty"></TextBlock>
-			</Canvas>
+				<Canvas x:Name="Canvas1" Width="75" Height="75" AllowDrop="True" Background="GhostWhite">
+					<i:Interaction.Triggers>
+						<i:EventTrigger EventName="Drop">
+							<cmd:EventToCommand Command="{Binding GetCanvas}" CommandParameter="{Binding ElementName=Canvas1}"/>
+							<cmd:EventToCommand Command="{Binding GetBorder}" CommandParameter="{Binding ElementName=Border1}"/>
+							<cmd:EventToCommand Command="{Binding GetDragEventArgs}" PassEventArgsToCommand="True"/>
+							<cmd:EventToCommand Command="{Binding Drop}"/>
+						</i:EventTrigger>
+						<i:EventTrigger EventName="DragOver">
+							<cmd:EventToCommand Command="{Binding GetCanvas}" CommandParameter="{Binding ElementName=Canvas1}"/>
+							<cmd:EventToCommand Command="{Binding GetDragEventArgs}" PassEventArgsToCommand="True"/>
+							<cmd:EventToCommand Command="{Binding DragOver}"/>
+						</i:EventTrigger>
+					</i:Interaction.Triggers>
+					<TextBlock Text="Empty"></TextBlock>
+				</Canvas>
 			</Border>
 			<Border x:Name="Border2" BorderThickness="3" Canvas.Left="225" Canvas.Top="18">
-			<Canvas x:Name="Canvas2" Width="75" Height="75"  AllowDrop="True" Background="GhostWhite">
-				<i:Interaction.Triggers>
-					<i:EventTrigger EventName="Drop">
-						<cmd:EventToCommand Command="{Binding GetCanvas}" CommandParameter="{Binding ElementName=Canvas2}"/>
-						<cmd:EventToCommand Command="{Binding GetBorder}" CommandParameter="{Binding ElementName=Border2}"/>
-						<cmd:EventToCommand Command="{Binding GetDragEventArgs}" PassEventArgsToCommand="True"/>
-						<cmd:EventToCommand Command="{Binding Drop}"/>
-					</i:EventTrigger>
-					<i:EventTrigger EventName="DragOver">
-						<cmd:EventToCommand Command="{Binding GetCanvas}" CommandParameter="{Binding ElementName=Canvas2}"/>
-						<cmd:EventToCommand Command="{Binding GetDragEventArgs}" PassEventArgsToCommand="True"/>
-						<cmd:EventToCommand Command="{Binding DragOver}"/>
-					</i:EventTrigger>
-				</i:Interaction.Triggers>
-				<TextBlock Text="Empty"></TextBlock>
-			</Canvas>
+				<Canvas x:Name="Canvas2" Width="75" Height="75"  AllowDrop="True" Background="GhostWhite">
+					<i:Interaction.Triggers>
+						<i:EventTrigger EventName="Drop">
+							<cmd:EventToCommand Command="{Binding GetCanvas}" CommandParameter="{Binding ElementName=Canvas2}"/>
+							<cmd:EventToCommand Command="{Binding GetBorder}" CommandParameter="{Binding ElementName=Border2}"/>
+							<cmd:EventToCommand Command="{Binding GetDragEventArgs}" PassEventArgsToCommand="True"/>
+							<cmd:EventToCommand Command="{Binding Drop}"/>
+						</i:EventTrigger>
+						<i:EventTrigger EventName="DragOver">
+							<cmd:EventToCommand Command="{Binding GetCanvas}" CommandParameter="{Binding ElementName=Canvas2}"/>
+							<cmd:EventToCommand Command="{Binding GetDragEventArgs}" PassEventArgsToCommand="True"/>
+							<cmd:EventToCommand Command="{Binding DragOver}"/>
+						</i:EventTrigger>
+					</i:Interaction.Triggers>
+					<TextBlock Text="Empty"></TextBlock>
+				</Canvas>
 			</Border>
 			<Border Name="Border3" BorderThickness="3" Canvas.Left="328" Canvas.Top="18">
-			<Canvas x:Name="Canvas3" Width="75" Height="75"  AllowDrop="True" Background="GhostWhite">
-				<i:Interaction.Triggers>
-					<i:EventTrigger EventName="Drop">
-						<cmd:EventToCommand Command="{Binding GetCanvas}" CommandParameter="{Binding ElementName=Canvas3}"/>
-						<cmd:EventToCommand Command="{Binding GetBorder}" CommandParameter="{Binding ElementName=Border3}"/>
-						<cmd:EventToCommand Command="{Binding GetDragEventArgs}" PassEventArgsToCommand="True"/>
-						<cmd:EventToCommand Command="{Binding Drop}"/>
-					</i:EventTrigger>
-					<i:EventTrigger EventName="DragOver">
-						<cmd:EventToCommand Command="{Binding GetCanvas}" CommandParameter="{Binding ElementName=Canvas3}"/>
-						<cmd:EventToCommand Command="{Binding GetDragEventArgs}" PassEventArgsToCommand="True"/>
-						<cmd:EventToCommand Command="{Binding DragOver}"/>
-					</i:EventTrigger>
-				</i:Interaction.Triggers>
-				<TextBlock Text="Empty"></TextBlock>
-			</Canvas>
+				<Canvas x:Name="Canvas3" Width="75" Height="75"  AllowDrop="True" Background="GhostWhite">
+					<i:Interaction.Triggers>
+						<i:EventTrigger EventName="Drop">
+							<cmd:EventToCommand Command="{Binding GetCanvas}" CommandParameter="{Binding ElementName=Canvas3}"/>
+							<cmd:EventToCommand Command="{Binding GetBorder}" CommandParameter="{Binding ElementName=Border3}"/>
+							<cmd:EventToCommand Command="{Binding GetDragEventArgs}" PassEventArgsToCommand="True"/>
+							<cmd:EventToCommand Command="{Binding Drop}"/>
+						</i:EventTrigger>
+						<i:EventTrigger EventName="DragOver">
+							<cmd:EventToCommand Command="{Binding GetCanvas}" CommandParameter="{Binding ElementName=Canvas3}"/>
+							<cmd:EventToCommand Command="{Binding GetDragEventArgs}" PassEventArgsToCommand="True"/>
+							<cmd:EventToCommand Command="{Binding DragOver}"/>
+						</i:EventTrigger>
+					</i:Interaction.Triggers>
+					<TextBlock Text="Empty"></TextBlock>
+				</Canvas>
 			</Border>
 
 			<Border x:Name="Border4" BorderThickness="3" Canvas.Left="24" Canvas.Top="139">
-			<Canvas x:Name="Canvas4" Width="75" Height="75"  AllowDrop="True" Background="GhostWhite">
-				<i:Interaction.Triggers>
-					<i:EventTrigger EventName="Drop">
-						<cmd:EventToCommand Command="{Binding GetCanvas}" CommandParameter="{Binding ElementName=Canvas4}"/>
-						<cmd:EventToCommand Command="{Binding GetBorder}" CommandParameter="{Binding ElementName=Border4}"/>
-						<cmd:EventToCommand Command="{Binding GetDragEventArgs}" PassEventArgsToCommand="True"/>
-						<cmd:EventToCommand Command="{Binding Drop}"/>
-					</i:EventTrigger>
-					<i:EventTrigger EventName="DragOver">
-						<cmd:EventToCommand Command="{Binding GetCanvas}" CommandParameter="{Binding ElementName=Canvas4}"/>
-						<cmd:EventToCommand Command="{Binding GetDragEventArgs}" PassEventArgsToCommand="True"/>
-						<cmd:EventToCommand Command="{Binding DragOver}"/>
-					</i:EventTrigger>
-				</i:Interaction.Triggers>
-				<TextBlock Text="Empty"></TextBlock>
-			</Canvas>
+				<Canvas x:Name="Canvas4" Width="75" Height="75"  AllowDrop="True" Background="GhostWhite">
+					<i:Interaction.Triggers>
+						<i:EventTrigger EventName="Drop">
+							<cmd:EventToCommand Command="{Binding GetCanvas}" CommandParameter="{Binding ElementName=Canvas4}"/>
+							<cmd:EventToCommand Command="{Binding GetBorder}" CommandParameter="{Binding ElementName=Border4}"/>
+							<cmd:EventToCommand Command="{Binding GetDragEventArgs}" PassEventArgsToCommand="True"/>
+							<cmd:EventToCommand Command="{Binding Drop}"/>
+						</i:EventTrigger>
+						<i:EventTrigger EventName="DragOver">
+							<cmd:EventToCommand Command="{Binding GetCanvas}" CommandParameter="{Binding ElementName=Canvas4}"/>
+							<cmd:EventToCommand Command="{Binding GetDragEventArgs}" PassEventArgsToCommand="True"/>
+							<cmd:EventToCommand Command="{Binding DragOver}"/>
+						</i:EventTrigger>
+					</i:Interaction.Triggers>
+					<TextBlock Text="Empty"></TextBlock>
+				</Canvas>
 			</Border>
 			<Border x:Name="Border5" BorderThickness="3" Canvas.Left="122" Canvas.Top="139">
-			<Canvas x:Name="Canvas5" Width="75" Height="75"  AllowDrop="True" Background="GhostWhite">
-				<i:Interaction.Triggers>
-					<i:EventTrigger EventName="Drop">
-						<cmd:EventToCommand Command="{Binding GetCanvas}" CommandParameter="{Binding ElementName=Canvas5}"/>
-						<cmd:EventToCommand Command="{Binding GetBorder}" CommandParameter="{Binding ElementName=Border5}"/>
-						<cmd:EventToCommand Command="{Binding GetDragEventArgs}" PassEventArgsToCommand="True"/>
-						<cmd:EventToCommand Command="{Binding Drop}"/>
-					</i:EventTrigger>
-					<i:EventTrigger EventName="DragOver">
-						<cmd:EventToCommand Command="{Binding GetCanvas}" CommandParameter="{Binding ElementName=Canvas5}"/>
-						<cmd:EventToCommand Command="{Binding GetDragEventArgs}" PassEventArgsToCommand="True"/>
-						<cmd:EventToCommand Command="{Binding DragOver}"/>
-					</i:EventTrigger>
-				</i:Interaction.Triggers>
-				<TextBlock Text="Empty"></TextBlock>
-			</Canvas>
+				<Canvas x:Name="Canvas5" Width="75" Height="75"  AllowDrop="True" Background="GhostWhite">
+					<i:Interaction.Triggers>
+						<i:EventTrigger EventName="Drop">
+							<cmd:EventToCommand Command="{Binding GetCanvas}" CommandParameter="{Binding ElementName=Canvas5}"/>
+							<cmd:EventToCommand Command="{Binding GetBorder}" CommandParameter="{Binding ElementName=Border5}"/>
+							<cmd:EventToCommand Command="{Binding GetDragEventArgs}" PassEventArgsToCommand="True"/>
+							<cmd:EventToCommand Command="{Binding Drop}"/>
+						</i:EventTrigger>
+						<i:EventTrigger EventName="DragOver">
+							<cmd:EventToCommand Command="{Binding GetCanvas}" CommandParameter="{Binding ElementName=Canvas5}"/>
+							<cmd:EventToCommand Command="{Binding GetDragEventArgs}" PassEventArgsToCommand="True"/>
+							<cmd:EventToCommand Command="{Binding DragOver}"/>
+						</i:EventTrigger>
+					</i:Interaction.Triggers>
+					<TextBlock Text="Empty"></TextBlock>
+				</Canvas>
 			</Border>
 			<Border x:Name="Border6" BorderThickness="3" Canvas.Left="225" Canvas.Top="139">
-			<Canvas x:Name="Canvas6" Width="75" Height="75"  AllowDrop="True" Background="GhostWhite">
-				<i:Interaction.Triggers>
-					<i:EventTrigger EventName="Drop">
-						<cmd:EventToCommand Command="{Binding GetCanvas}" CommandParameter="{Binding ElementName=Canvas6}"/>
-						<cmd:EventToCommand Command="{Binding GetBorder}" CommandParameter="{Binding ElementName=Border6}"/>
-						<cmd:EventToCommand Command="{Binding GetDragEventArgs}" PassEventArgsToCommand="True"/>
-						<cmd:EventToCommand Command="{Binding Drop}"/>
-					</i:EventTrigger>
-					<i:EventTrigger EventName="DragOver">
-						<cmd:EventToCommand Command="{Binding GetCanvas}" CommandParameter="{Binding ElementName=Canvas6}"/>
-						<cmd:EventToCommand Command="{Binding GetDragEventArgs}" PassEventArgsToCommand="True"/>
-						<cmd:EventToCommand Command="{Binding DragOver}"/>
-					</i:EventTrigger>
-				</i:Interaction.Triggers>
-				<TextBlock Text="Empty"></TextBlock>
-			</Canvas>
+				<Canvas x:Name="Canvas6" Width="75" Height="75"  AllowDrop="True" Background="GhostWhite">
+					<i:Interaction.Triggers>
+						<i:EventTrigger EventName="Drop">
+							<cmd:EventToCommand Command="{Binding GetCanvas}" CommandParameter="{Binding ElementName=Canvas6}"/>
+							<cmd:EventToCommand Command="{Binding GetBorder}" CommandParameter="{Binding ElementName=Border6}"/>
+							<cmd:EventToCommand Command="{Binding GetDragEventArgs}" PassEventArgsToCommand="True"/>
+							<cmd:EventToCommand Command="{Binding Drop}"/>
+						</i:EventTrigger>
+						<i:EventTrigger EventName="DragOver">
+							<cmd:EventToCommand Command="{Binding GetCanvas}" CommandParameter="{Binding ElementName=Canvas6}"/>
+							<cmd:EventToCommand Command="{Binding GetDragEventArgs}" PassEventArgsToCommand="True"/>
+							<cmd:EventToCommand Command="{Binding DragOver}"/>
+						</i:EventTrigger>
+					</i:Interaction.Triggers>
+					<TextBlock Text="Empty"></TextBlock>
+				</Canvas>
 			</Border>
 			<Border x:Name="Border7" BorderThickness="3" Canvas.Left="328" Canvas.Top="139">
-			<Canvas x:Name="Canvas7" Width="75" Height="75"  AllowDrop="True" Background="GhostWhite">
-				<i:Interaction.Triggers>
-					<i:EventTrigger EventName="Drop">
-						<cmd:EventToCommand Command="{Binding GetCanvas}" CommandParameter="{Binding ElementName=Canvas7}"/>
-						<cmd:EventToCommand Command="{Binding GetBorder}" CommandParameter="{Binding ElementName=Border7}"/>
-						<cmd:EventToCommand Command="{Binding GetDragEventArgs}" PassEventArgsToCommand="True"/>
-						<cmd:EventToCommand Command="{Binding Drop}"/>
-					</i:EventTrigger>
-					<i:EventTrigger EventName="DragOver">
-						<cmd:EventToCommand Command="{Binding GetCanvas}" CommandParameter="{Binding ElementName=Canvas7}"/>
-						<cmd:EventToCommand Command="{Binding GetDragEventArgs}" PassEventArgsToCommand="True"/>
-						<cmd:EventToCommand Command="{Binding DragOver}"/>
-					</i:EventTrigger>
-				</i:Interaction.Triggers>
-				<TextBlock Text="Empty"></TextBlock>
-			</Canvas>
+				<Canvas x:Name="Canvas7" Width="75" Height="75"  AllowDrop="True" Background="GhostWhite">
+					<i:Interaction.Triggers>
+						<i:EventTrigger EventName="Drop">
+							<cmd:EventToCommand Command="{Binding GetCanvas}" CommandParameter="{Binding ElementName=Canvas7}"/>
+							<cmd:EventToCommand Command="{Binding GetBorder}" CommandParameter="{Binding ElementName=Border7}"/>
+							<cmd:EventToCommand Command="{Binding GetDragEventArgs}" PassEventArgsToCommand="True"/>
+							<cmd:EventToCommand Command="{Binding Drop}"/>
+						</i:EventTrigger>
+						<i:EventTrigger EventName="DragOver">
+							<cmd:EventToCommand Command="{Binding GetCanvas}" CommandParameter="{Binding ElementName=Canvas7}"/>
+							<cmd:EventToCommand Command="{Binding GetDragEventArgs}" PassEventArgsToCommand="True"/>
+							<cmd:EventToCommand Command="{Binding DragOver}"/>
+						</i:EventTrigger>
+					</i:Interaction.Triggers>
+					<TextBlock Text="Empty"></TextBlock>
+				</Canvas>
 			</Border>
 
 			<Border x:Name="Border8" BorderThickness="3" Canvas.Left="24" Canvas.Top="269" >
-			<Canvas x:Name="Canvas8" Width="75" Height="75" AllowDrop="True" Background="GhostWhite">
-				<i:Interaction.Triggers>
-					<i:EventTrigger EventName="Drop">
-						<cmd:EventToCommand Command="{Binding GetCanvas}" CommandParameter="{Binding ElementName=Canvas8}"/>
-						<cmd:EventToCommand Command="{Binding GetBorder}" CommandParameter="{Binding ElementName=Border8}"/>
-						<cmd:EventToCommand Command="{Binding GetDragEventArgs}" PassEventArgsToCommand="True"/>
-						<cmd:EventToCommand Command="{Binding Drop}"/>
-					</i:EventTrigger>
-					<i:EventTrigger EventName="DragOver">
-						<cmd:EventToCommand Command="{Binding GetCanvas}" CommandParameter="{Binding ElementName=Canvas8}"/>
-						<cmd:EventToCommand Command="{Binding GetDragEventArgs}" PassEventArgsToCommand="True"/>
-						<cmd:EventToCommand Command="{Binding DragOver}"/>
-					</i:EventTrigger>
-				</i:Interaction.Triggers>
-				<TextBlock Text="Empty"></TextBlock>
-			</Canvas>
+				<Canvas x:Name="Canvas8" Width="75" Height="75" AllowDrop="True" Background="GhostWhite">
+					<i:Interaction.Triggers>
+						<i:EventTrigger EventName="Drop">
+							<cmd:EventToCommand Command="{Binding GetCanvas}" CommandParameter="{Binding ElementName=Canvas8}"/>
+							<cmd:EventToCommand Command="{Binding GetBorder}" CommandParameter="{Binding ElementName=Border8}"/>
+							<cmd:EventToCommand Command="{Binding GetDragEventArgs}" PassEventArgsToCommand="True"/>
+							<cmd:EventToCommand Command="{Binding Drop}"/>
+						</i:EventTrigger>
+						<i:EventTrigger EventName="DragOver">
+							<cmd:EventToCommand Command="{Binding GetCanvas}" CommandParameter="{Binding ElementName=Canvas8}"/>
+							<cmd:EventToCommand Command="{Binding GetDragEventArgs}" PassEventArgsToCommand="True"/>
+							<cmd:EventToCommand Command="{Binding DragOver}"/>
+						</i:EventTrigger>
+					</i:Interaction.Triggers>
+					<TextBlock Text="Empty"></TextBlock>
+				</Canvas>
 			</Border>
 			<Border x:Name="Border9" BorderThickness="3" Canvas.Left="122" Canvas.Top="269">
-			<Canvas x:Name="Canvas9" Width="75" Height="75"  AllowDrop="True" Background="GhostWhite">
-				<i:Interaction.Triggers>
-					<i:EventTrigger EventName="Drop">
-						<cmd:EventToCommand Command="{Binding GetCanvas}" CommandParameter="{Binding ElementName=Canvas9}"/>
-						<cmd:EventToCommand Command="{Binding GetBorder}" CommandParameter="{Binding ElementName=Border9}"/>
-						<cmd:EventToCommand Command="{Binding GetDragEventArgs}" PassEventArgsToCommand="True"/>
-						<cmd:EventToCommand Command="{Binding Drop}"/>
-					</i:EventTrigger>
-					<i:EventTrigger EventName="DragOver">
-						<cmd:EventToCommand Command="{Binding GetCanvas}" CommandParameter="{Binding ElementName=Canvas9}"/>
-						<cmd:EventToCommand Command="{Binding GetDragEventArgs}" PassEventArgsToCommand="True"/>
-						<cmd:EventToCommand Command="{Binding DragOver}"/>
-					</i:EventTrigger>
-				</i:Interaction.Triggers>
-				<TextBlock Text="Empty"></TextBlock>
-			</Canvas>
+				<Canvas x:Name="Canvas9" Width="75" Height="75"  AllowDrop="True" Background="GhostWhite">
+					<i:Interaction.Triggers>
+						<i:EventTrigger EventName="Drop">
+							<cmd:EventToCommand Command="{Binding GetCanvas}" CommandParameter="{Binding ElementName=Canvas9}"/>
+							<cmd:EventToCommand Command="{Binding GetBorder}" CommandParameter="{Binding ElementName=Border9}"/>
+							<cmd:EventToCommand Command="{Binding GetDragEventArgs}" PassEventArgsToCommand="True"/>
+							<cmd:EventToCommand Command="{Binding Drop}"/>
+						</i:EventTrigger>
+						<i:EventTrigger EventName="DragOver">
+							<cmd:EventToCommand Command="{Binding GetCanvas}" CommandParameter="{Binding ElementName=Canvas9}"/>
+							<cmd:EventToCommand Command="{Binding GetDragEventArgs}" PassEventArgsToCommand="True"/>
+							<cmd:EventToCommand Command="{Binding DragOver}"/>
+						</i:EventTrigger>
+					</i:Interaction.Triggers>
+					<TextBlock Text="Empty"></TextBlock>
+				</Canvas>
 			</Border>
 			<Border x:Name="Border10" BorderThickness="3" Canvas.Left="225" Canvas.Top="269">
-			<Canvas x:Name="Canvas10" Width="75" Height="75"  AllowDrop="True" Background="GhostWhite">
-				<i:Interaction.Triggers>
-					<i:EventTrigger EventName="Drop">
+				<Canvas x:Name="Canvas10" Width="75" Height="75"  AllowDrop="True" Background="GhostWhite">
+					<i:Interaction.Triggers>
+						<i:EventTrigger EventName="Drop">
 							<cmd:EventToCommand Command="{Binding GetCanvas}" CommandParameter="{Binding ElementName=Canvas10}"/>
 							<cmd:EventToCommand Command="{Binding GetBorder}" CommandParameter="{Binding ElementName=Border10}"/>
 							<cmd:EventToCommand Command="{Binding GetDragEventArgs}" PassEventArgsToCommand="True"/>
-						<cmd:EventToCommand Command="{Binding Drop}"/>
-					</i:EventTrigger>
-					<i:EventTrigger EventName="DragOver">
-						<cmd:EventToCommand Command="{Binding GetCanvas}" CommandParameter="{Binding ElementName=Canvas10}"/>
-						<cmd:EventToCommand Command="{Binding GetDragEventArgs}" PassEventArgsToCommand="True"/>
-						<cmd:EventToCommand Command="{Binding DragOver}"/>
-					</i:EventTrigger>
-				</i:Interaction.Triggers>
-				<TextBlock Text="Empty"></TextBlock>
-			</Canvas>
+							<cmd:EventToCommand Command="{Binding Drop}"/>
+						</i:EventTrigger>
+						<i:EventTrigger EventName="DragOver">
+							<cmd:EventToCommand Command="{Binding GetCanvas}" CommandParameter="{Binding ElementName=Canvas10}"/>
+							<cmd:EventToCommand Command="{Binding GetDragEventArgs}" PassEventArgsToCommand="True"/>
+							<cmd:EventToCommand Command="{Binding DragOver}"/>
+						</i:EventTrigger>
+					</i:Interaction.Triggers>
+					<TextBlock Text="Empty"></TextBlock>
+				</Canvas>
 			</Border>
 			<Border x:Name="Border11" BorderThickness="3" Canvas.Left="328" Canvas.Top="269" >
-			<Canvas x:Name="Canvas11" Width="75" Height="75" AllowDrop="True" Background="GhostWhite">
-				<i:Interaction.Triggers>
-					<i:EventTrigger EventName="Drop">
-						<cmd:EventToCommand Command="{Binding GetCanvas}" CommandParameter="{Binding ElementName=Canvas11}"/>
-						<cmd:EventToCommand Command="{Binding GetBorder}" CommandParameter="{Binding ElementName=Border11}"/>
-						<cmd:EventToCommand Command="{Binding GetDragEventArgs}" PassEventArgsToCommand="True"/>
-						<cmd:EventToCommand Command="{Binding Drop}"/>
-					</i:EventTrigger>
-					<i:EventTrigger EventName="DragOver">
-						<cmd:EventToCommand Command="{Binding GetCanvas}" CommandParameter="{Binding ElementName=Canvas11}"/>
-						<cmd:EventToCommand Command="{Binding GetDragEventArgs}" PassEventArgsToCommand="True"/>
-						<cmd:EventToCommand Command="{Binding DragOver}"/>
-					</i:EventTrigger>
-				</i:Interaction.Triggers>
-				<TextBlock Text="Empty"></TextBlock>
-			</Canvas>
+				<Canvas x:Name="Canvas11" Width="75" Height="75" AllowDrop="True" Background="GhostWhite">
+					<i:Interaction.Triggers>
+						<i:EventTrigger EventName="Drop">
+							<cmd:EventToCommand Command="{Binding GetCanvas}" CommandParameter="{Binding ElementName=Canvas11}"/>
+							<cmd:EventToCommand Command="{Binding GetBorder}" CommandParameter="{Binding ElementName=Border11}"/>
+							<cmd:EventToCommand Command="{Binding GetDragEventArgs}" PassEventArgsToCommand="True"/>
+							<cmd:EventToCommand Command="{Binding Drop}"/>
+						</i:EventTrigger>
+						<i:EventTrigger EventName="DragOver">
+							<cmd:EventToCommand Command="{Binding GetCanvas}" CommandParameter="{Binding ElementName=Canvas11}"/>
+							<cmd:EventToCommand Command="{Binding GetDragEventArgs}" PassEventArgsToCommand="True"/>
+							<cmd:EventToCommand Command="{Binding DragOver}"/>
+						</i:EventTrigger>
+					</i:Interaction.Triggers>
+					<TextBlock Text="Empty"></TextBlock>
+				</Canvas>
 			</Border>
 
 			<Border x:Name="Border12" BorderThickness="3" Canvas.Left="24" Canvas.Top="393">
-			<Canvas x:Name="Canvas12" Width="75" Height="75"  AllowDrop="True" Background="GhostWhite">
-				<i:Interaction.Triggers>
-					<i:EventTrigger EventName="Drop">
-						<cmd:EventToCommand Command="{Binding GetCanvas}" CommandParameter="{Binding ElementName=Canvas12}"/>
-						<cmd:EventToCommand Command="{Binding GetBorder}" CommandParameter="{Binding ElementName=Border12}"/>
-						<cmd:EventToCommand Command="{Binding GetDragEventArgs}" PassEventArgsToCommand="True"/>
-						<cmd:EventToCommand Command="{Binding Drop}"/>
-					</i:EventTrigger>
-					<i:EventTrigger EventName="DragOver">
-						<cmd:EventToCommand Command="{Binding GetCanvas}" CommandParameter="{Binding ElementName=Canvas12}"/>
-						<cmd:EventToCommand Command="{Binding GetDragEventArgs}" PassEventArgsToCommand="True"/>
-						<cmd:EventToCommand Command="{Binding DragOver}"/>
-					</i:EventTrigger>
-				</i:Interaction.Triggers>
-				<TextBlock Text="Empty"></TextBlock>
-			</Canvas>
+				<Canvas x:Name="Canvas12" Width="75" Height="75"  AllowDrop="True" Background="GhostWhite">
+					<i:Interaction.Triggers>
+						<i:EventTrigger EventName="Drop">
+							<cmd:EventToCommand Command="{Binding GetCanvas}" CommandParameter="{Binding ElementName=Canvas12}"/>
+							<cmd:EventToCommand Command="{Binding GetBorder}" CommandParameter="{Binding ElementName=Border12}"/>
+							<cmd:EventToCommand Command="{Binding GetDragEventArgs}" PassEventArgsToCommand="True"/>
+							<cmd:EventToCommand Command="{Binding Drop}"/>
+						</i:EventTrigger>
+						<i:EventTrigger EventName="DragOver">
+							<cmd:EventToCommand Command="{Binding GetCanvas}" CommandParameter="{Binding ElementName=Canvas12}"/>
+							<cmd:EventToCommand Command="{Binding GetDragEventArgs}" PassEventArgsToCommand="True"/>
+							<cmd:EventToCommand Command="{Binding DragOver}"/>
+						</i:EventTrigger>
+					</i:Interaction.Triggers>
+					<TextBlock Text="Empty"></TextBlock>
+				</Canvas>
 			</Border>
 			<Border x:Name="Border13" BorderThickness="3" Canvas.Left="122" Canvas.Top="393">
-			<Canvas x:Name="Canvas13" Width="75" Height="75"  AllowDrop="True" Background="GhostWhite">
-				<i:Interaction.Triggers>
-					<i:EventTrigger EventName="Drop">
-						<cmd:EventToCommand Command="{Binding GetCanvas}" CommandParameter="{Binding ElementName=Canvas13}"/>
-						<cmd:EventToCommand Command="{Binding GetBorder}" CommandParameter="{Binding ElementName=Border13}"/>
-						<cmd:EventToCommand Command="{Binding GetDragEventArgs}" PassEventArgsToCommand="True"/>
-						<cmd:EventToCommand Command="{Binding Drop}"/>
-					</i:EventTrigger>
-					<i:EventTrigger EventName="DragOver">
-						<cmd:EventToCommand Command="{Binding GetCanvas}" CommandParameter="{Binding ElementName=Canvas13}"/>
-						<cmd:EventToCommand Command="{Binding GetDragEventArgs}" PassEventArgsToCommand="True"/>
-						<cmd:EventToCommand Command="{Binding DragOver}"/>
-					</i:EventTrigger>
-				</i:Interaction.Triggers>
-				<TextBlock Text="Empty"></TextBlock>
-			</Canvas>
+				<Canvas x:Name="Canvas13" Width="75" Height="75"  AllowDrop="True" Background="GhostWhite">
+					<i:Interaction.Triggers>
+						<i:EventTrigger EventName="Drop">
+							<cmd:EventToCommand Command="{Binding GetCanvas}" CommandParameter="{Binding ElementName=Canvas13}"/>
+							<cmd:EventToCommand Command="{Binding GetBorder}" CommandParameter="{Binding ElementName=Border13}"/>
+							<cmd:EventToCommand Command="{Binding GetDragEventArgs}" PassEventArgsToCommand="True"/>
+							<cmd:EventToCommand Command="{Binding Drop}"/>
+						</i:EventTrigger>
+						<i:EventTrigger EventName="DragOver">
+							<cmd:EventToCommand Command="{Binding GetCanvas}" CommandParameter="{Binding ElementName=Canvas13}"/>
+							<cmd:EventToCommand Command="{Binding GetDragEventArgs}" PassEventArgsToCommand="True"/>
+							<cmd:EventToCommand Command="{Binding DragOver}"/>
+						</i:EventTrigger>
+					</i:Interaction.Triggers>
+					<TextBlock Text="Empty"></TextBlock>
+				</Canvas>
 			</Border>
 			<Border x:Name="Border14" BorderThickness="3"  Canvas.Left="225" Canvas.Top="393">
-			<Canvas x:Name="Canvas14" Width="75" Height="75" AllowDrop="True" Background="GhostWhite">
-				<i:Interaction.Triggers>
-					<i:EventTrigger EventName="Drop">
-						<cmd:EventToCommand Command="{Binding GetCanvas}" CommandParameter="{Binding ElementName=Canvas14}"/>
-						<cmd:EventToCommand Command="{Binding GetBorder}" CommandParameter="{Binding ElementName=Border14}"/>
-						<cmd:EventToCommand Command="{Binding GetDragEventArgs}" PassEventArgsToCommand="True"/>
-						<cmd:EventToCommand Command="{Binding Drop}"/>
-					</i:EventTrigger>
-					<i:EventTrigger EventName="DragOver">
-						<cmd:EventToCommand Command="{Binding GetCanvas}" CommandParameter="{Binding ElementName=Canvas14}"/>
-						<cmd:EventToCommand Command="{Binding GetDragEventArgs}" PassEventArgsToCommand="True"/>
-						<cmd:EventToCommand Command="{Binding DragOver}"/>
-					</i:EventTrigger>
-				</i:Interaction.Triggers>
-				<TextBlock Text="Empty"></TextBlock>
-			</Canvas>
+				<Canvas x:Name="Canvas14" Width="75" Height="75" AllowDrop="True" Background="GhostWhite">
+					<i:Interaction.Triggers>
+						<i:EventTrigger EventName="Drop">
+							<cmd:EventToCommand Command="{Binding GetCanvas}" CommandParameter="{Binding ElementName=Canvas14}"/>
+							<cmd:EventToCommand Command="{Binding GetBorder}" CommandParameter="{Binding ElementName=Border14}"/>
+							<cmd:EventToCommand Command="{Binding GetDragEventArgs}" PassEventArgsToCommand="True"/>
+							<cmd:EventToCommand Command="{Binding Drop}"/>
+						</i:EventTrigger>
+						<i:EventTrigger EventName="DragOver">
+							<cmd:EventToCommand Command="{Binding GetCanvas}" CommandParameter="{Binding ElementName=Canvas14}"/>
+							<cmd:EventToCommand Command="{Binding GetDragEventArgs}" PassEventArgsToCommand="True"/>
+							<cmd:EventToCommand Command="{Binding DragOver}"/>
+						</i:EventTrigger>
+					</i:Interaction.Triggers>
+					<TextBlock Text="Empty"></TextBlock>
+				</Canvas>
 			</Border>
 			<Border x:Name="Border15" BorderThickness="3" Canvas.Left="328" Canvas.Top="393">
-			<Canvas x:Name="Canvas15" Width="75" Height="75"  AllowDrop="True" Background="GhostWhite">
-				<i:Interaction.Triggers>
-					<i:EventTrigger EventName="Drop">
-						<cmd:EventToCommand Command="{Binding GetCanvas}" CommandParameter="{Binding ElementName=Canvas15}"/>
-						<cmd:EventToCommand Command="{Binding GetBorder}" CommandParameter="{Binding ElementName=Border15}"/>
-						<cmd:EventToCommand Command="{Binding GetDragEventArgs}" PassEventArgsToCommand="True"/>
-						<cmd:EventToCommand Command="{Binding Drop}"/>
-					</i:EventTrigger>
-					<i:EventTrigger EventName="DragOver">
-						<cmd:EventToCommand Command="{Binding GetCanvas}" CommandParameter="{Binding ElementName=Canvas15}"/>
-						<cmd:EventToCommand Command="{Binding GetDragEventArgs}" PassEventArgsToCommand="True"/>
-						<cmd:EventToCommand Command="{Binding DragOver}"/>
-					</i:EventTrigger>
-				</i:Interaction.Triggers>
-				<TextBlock Text="Empty"></TextBlock>
-			</Canvas>
+				<Canvas x:Name="Canvas15" Width="75" Height="75"  AllowDrop="True" Background="GhostWhite">
+					<i:Interaction.Triggers>
+						<i:EventTrigger EventName="Drop">
+							<cmd:EventToCommand Command="{Binding GetCanvas}" CommandParameter="{Binding ElementName=Canvas15}"/>
+							<cmd:EventToCommand Command="{Binding GetBorder}" CommandParameter="{Binding ElementName=Border15}"/>
+							<cmd:EventToCommand Command="{Binding GetDragEventArgs}" PassEventArgsToCommand="True"/>
+							<cmd:EventToCommand Command="{Binding Drop}"/>
+						</i:EventTrigger>
+						<i:EventTrigger EventName="DragOver">
+							<cmd:EventToCommand Command="{Binding GetCanvas}" CommandParameter="{Binding ElementName=Canvas15}"/>
+							<cmd:EventToCommand Command="{Binding GetDragEventArgs}" PassEventArgsToCommand="True"/>
+							<cmd:EventToCommand Command="{Binding DragOver}"/>
+						</i:EventTrigger>
+					</i:Interaction.Triggers>
+					<TextBlock Text="Empty"></TextBlock>
+				</Canvas>
 			</Border>
 		</Canvas>
-
+		
 		<ListView x:Name="ListView"
 				  Grid.Row="1" Grid.Column="1" 
 				  ItemsSource="{Binding DERs, Mode=TwoWay}"                           
